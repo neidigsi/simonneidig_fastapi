@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "665daf2b-19c2-4b0c-8fb5-a70fb707f442",
+		"name": "REST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "9159996-665daf2b-19c2-4b0c-8fb5-a70fb707f442"
+	},
+	"item": [
+		{
+			"name": "Education",
+			"item": [
+				{
+					"name": "Successful request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a2c1acd-1241-4a9c-a7da-8897a4c787f3",
+								"exec": [
+									"pm.test(\"Education / Successful request - Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "443c8335-2143-41eb-9da3-6abebd731455",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}",
+							"host": [
+								"{{base-url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "664e59d3-bed6-4594-a9d6-4585077c6377"
+		},
+		{
+			"name": "Experience",
+			"item": [],
+			"id": "e817754c-7019-4f35-b079-36667b9a091d"
+		},
+		{
+			"name": "Works",
+			"item": [
+				{
+					"name": "All",
+					"item": [],
+					"id": "1e25039d-5e77-4988-b0f1-1455c316b0e8"
+				},
+				{
+					"name": "Single",
+					"item": [],
+					"id": "cc7155ee-ba48-4a1f-8da2-cc4d68be926e"
+				}
+			],
+			"id": "2733d637-f56f-4ba1-8275-2149a8ef7690"
+		},
+		{
+			"name": "Skills",
+			"item": [],
+			"id": "653ff1e2-3884-4ab1-b7d7-f7e5efb1f9f7"
+		},
+		{
+			"name": "Personal Information",
+			"item": [],
+			"id": "7d3f1e41-5690-4262-904e-0b8ac1c836a5"
+		}
+	]
+}
