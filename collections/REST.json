@@ -34,9 +34,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base-url}}",
+							"raw": "{{base-url}}/education",
 							"host": [
 								"{{base-url}}"
+							],
+							"path": [
+								"education"
 							]
 						}
 					},
