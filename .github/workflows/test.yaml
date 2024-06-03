@@ -3,7 +3,7 @@ name: Run Postman Tests
 on: push
 
 jobs:
-  build:
+  postman-test:
     runs-on: ubuntu-latest
 
     steps:
