@@ -3,33 +3,37 @@ name: Run Postman Tests
 on: push
 
 jobs:
-  build:
+  postman-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Start FastAPI app
+    - name: Start FastAPI App
       run: |
-        nohup fastapi run app/main.py --port 80 &
+        nohup fastapi run app/main.py --port 8000 &
         sleep 10
+
     - name: Install Postman CLI
       run: |
         curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+
     - name: Login to Postman CLI
-      run: postman login --with-api-key ${{ secrets.POSTMAN_TOKEN }}
+      run: |
+        postman login --with-api-key ${{ secrets.POSTMAN_TOKEN }}
+
     - name: Run Postman Tests
       run: |
         # Run Postman tests
-        postman collection run 9159996-665daf2b-19c2-4b0c-8fb5-a70fb707f442 -e 9159996-08aa1a9a-c17a-4441-9950-5e3a72e628a0
+        postman collection run 9159996-20961b0d-bf53-445d-ad18-4f6f31d69009 -e 9159996-bdc3bc36-e5f3-47f2-ab24-336e8c72e582
