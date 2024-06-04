@@ -22,7 +22,7 @@ jobs:
 
     - name: Start FastAPI App
       run: |
-        nohup fastapi run app/main.py --port 80 &
+        nohup fastapi run app/main.py --port 8000 &
         sleep 10
 
     - name: Install Postman CLI
@@ -36,4 +36,4 @@ jobs:
     - name: Run Postman Tests
       run: |
         # Run Postman tests
-        postman collection run 9159996-20961b0d-bf53-445d-ad18-4f6f31d69009 -e 9159996-08aa1a9a-c17a-4441-9950-5e3a72e628a0
+        postman collection run 9159996-20961b0d-bf53-445d-ad18-4f6f31d69009 -e 9159996-bdc3bc36-e5f3-47f2-ab24-336e8c72e582
