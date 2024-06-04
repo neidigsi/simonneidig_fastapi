@@ -6,6 +6,25 @@ jobs:
   postman-test:
     runs-on: ubuntu-latest
 
+    # All services that are needed for testing
+    services:
+      # Database for testing
+      postgres:
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.DB_TEST_PWD }}
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+    # The testing steps
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -19,6 +38,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    - name: Generate Configuration
+      run: |
+        sed -i~ '/^DB_PASSWORD=/s/=.*/="${{ secrets.DB_TEST_PWD }}"/' .env.example
+        mv .env.example .env
 
     - name: Start FastAPI App
       run: |
