@@ -6,8 +6,8 @@ from sqlalchemy.orm import relationship
 from app.db.database import Base
 
 
-class Institution(Base):
-    __tablename__ = "institution"
+class Language(Base):
+    __tablename__ = "language"
 
     # Primary key
     id = Column(Integer, primary_key=True)
@@ -16,4 +16,4 @@ class Institution(Base):
     name = Column(String)
 
     # Establishing relationships
-    educations = relationship("Education", back_populates="university")
+    education_translations = relationship("EducationTranslation", back_populates="language")

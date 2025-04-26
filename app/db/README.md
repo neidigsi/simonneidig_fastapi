@@ -1,10 +1,10 @@
-## Create migrations
+## Create Migrations
 
 ```
-alembic revision --autogenerate "Change message"
+alembic revision --autogenerate -m "Change message"
 ```
 
-## Appply migrations
+## Appply Migrations
 
 ```
 alembic upgrade head
