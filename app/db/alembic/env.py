@@ -1,4 +1,11 @@
 from logging.config import fileConfig
+from importlib import import_module
+from pkgutil import iter_modules
+from app.db import models
+
+# Dynamically import all modules in app.db.models
+for _, module_name, _ in iter_modules(models.__path__):
+    import_module(f"app.db.models.{module_name}")
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
@@ -6,12 +13,6 @@ from sqlalchemy import pool
 from alembic import context
 
 from app.db.database import Base
-from app.db.models import (
-    education,
-    education_translation,
-    institution,
-    language,
-)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

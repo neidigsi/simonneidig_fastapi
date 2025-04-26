@@ -1,5 +1,5 @@
 # Import external dependencies
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 # Import internal dependencies
@@ -12,8 +12,12 @@ class Institution(Base):
     # Primary key
     id = Column(Integer, primary_key=True)
     
-    # Content
-    name = Column(String)
+    # Foreign keys
+    address_id = Column(Integer, ForeignKey("institution.id"))
 
     # Establishing relationships
+    translations = relationship(
+        "InstitutionTranslation", back_populates="institution")
+    address = relationship(
+        "Address", back_populates="institutions")
     educations = relationship("Education", back_populates="university")

@@ -14,6 +14,8 @@ class Language(Base):
     
     # Content
     name = Column(String)
+    iso639_1 = Column(String)
 
     # Establishing relationships
     education_translations = relationship("EducationTranslation", back_populates="language")
+    institution_translations = relationship("InstitutionTranslation", back_populates="language")

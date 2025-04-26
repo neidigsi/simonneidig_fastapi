@@ -15,8 +15,6 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-# Dependency
-
 
 def get_language(request: Request):
     lang = request.headers.get("accept-language", "en")
