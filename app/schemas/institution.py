@@ -11,7 +11,6 @@ class InstitutionBase(BaseModel):
 
 class Institution(InstitutionBase):
     name: str | None = None
-    description: str | None = None
     address: Address | None = None
 
     class Config:
