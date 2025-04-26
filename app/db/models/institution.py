@@ -4,6 +4,8 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
+from app.db.models.institution_translation import InstitutionTranslation
+from app.db.models.address import Address
 
 
 class Institution(Base):
@@ -11,9 +13,9 @@ class Institution(Base):
 
     # Primary key
     id = Column(Integer, primary_key=True)
-    
+
     # Foreign keys
-    address_id = Column(Integer, ForeignKey("institution.id"))
+    address_id = Column(Integer, ForeignKey("address.id"))
 
     # Establishing relationships
     translations = relationship(

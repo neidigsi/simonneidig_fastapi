@@ -1,5 +1,5 @@
 # Import external dependencies
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
 # Import internal dependencies
@@ -18,6 +18,6 @@ class Address(Base):
     zip = Column(Integer)
     city = Column(String)
     country = Column(String)
- 
+
     # Establishing relationships
-    institutions = relationship("Institutions", back_populates="address")
+    institutions = relationship("Institution", back_populates="address")

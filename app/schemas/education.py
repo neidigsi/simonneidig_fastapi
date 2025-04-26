@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.db.schemas.institution import Institution
+from app.schemas.institution import Institution
 
 
 class EducationBase(BaseModel):

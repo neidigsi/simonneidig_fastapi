@@ -11,11 +11,11 @@ class EducationTranslation(Base):
 
     # Primary key
     id = Column(Integer, primary_key=True)
-    
+
     # Content
     course_of_study = Column(String)
     description = Column(String)
-    
+
     # Foreign keys
     education_id = Column(Integer, ForeignKey("education.id"))
     language_id = Column(Integer, ForeignKey("language.id"))

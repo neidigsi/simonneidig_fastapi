@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
+from app.db.models.education_translation import EducationTranslation
 
 
 class Language(Base):

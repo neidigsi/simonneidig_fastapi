@@ -4,17 +4,18 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
+from app.db.models.language import Language
 
 
-class InstitutionTransation(Base):
+class InstitutionTranslation(Base):
     __tablename__ = "institution_translation"
 
     # Primary key
     id = Column(Integer, primary_key=True)
-    
+
     # Content
     name = Column(String)
-    
+
     # Foreign keys
     institution_id = Column(Integer, ForeignKey("institution.id"))
     language_id = Column(Integer, ForeignKey("language.id"))

@@ -12,7 +12,7 @@ class Education(Base):
 
     # Primary key
     id = Column(Integer, primary_key=True)
-    
+
     # Content
     start_date = Column(Date)
     end_date = Column(Date)
@@ -23,5 +23,6 @@ class Education(Base):
     institution_id = Column(Integer, ForeignKey("institution.id"))
 
     # Establishing relationships
-    translations = relationship("EducationTranslation", back_populates="education")
+    translations = relationship(
+        "EducationTranslation", back_populates="education")
     university = relationship(Institution, back_populates="educations")

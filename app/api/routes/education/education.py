@@ -2,9 +2,10 @@ from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 from app.db.models import education as models
-from app.db.schemas import education as schemas
 from app.db.queries import education as crud
 from app.db.database import SessionLocal, engine
+from app.schemas import education as schemas
+
 
 models.Base.metadata.create_all(bind=engine)
 
