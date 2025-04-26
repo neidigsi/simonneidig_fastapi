@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from app.db.database import Base
 from app.db.models.institution import Institution
+from app.db.models.education_translation import EducationTranslation
 
 
 class Education(Base):
@@ -12,10 +13,9 @@ class Education(Base):
     start_date = Column(Date)
     end_date = Column(Date)
     degree = Column(String)
-    course_of_study = Column(String)
-    description = Column(String)
     grade = Column(Double)
+    translations = relationship("EducationTranslation", back_populates="education")
+
     institution_id = Column(Integer, ForeignKey("institution.id"))
 
-
-    university = relationship("Institution", back_populates="educations")
+    university = relationship(Institution, back_populates="educations")

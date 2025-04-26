@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 from app.db.models import education as models
@@ -18,6 +18,11 @@ router = APIRouter(
 # Dependency
 
 
+def get_language(request: Request):
+    lang = request.headers.get("accept-language", "en")
+    return lang.split(",")[0].strip().lower()  # z.B. "de-DE,de;q=0.9" -> "de"
+
+
 def get_db():
     db = SessionLocal()
     try:
@@ -27,7 +32,7 @@ def get_db():
 
 
 @router.get("/", response_model=list[schemas.Education])
-async def get_education(db: Session = Depends(get_db)):
-    education = crud.get_educations(db)
+async def get_education(lang: str = Depends(get_language), db: Session = Depends(get_db)):
+    education = crud.get_educations(lang, db)
 
     return education

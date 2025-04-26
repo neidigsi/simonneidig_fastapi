@@ -10,10 +10,8 @@ COPY ./requirements.txt /code/requirements.txt
 # Install postgresql
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
-    && apt-get clean
-
-# Install requirements
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+    && apt-get clean \
+    && pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 # Copy app inside container
 COPY ./app /code/app
