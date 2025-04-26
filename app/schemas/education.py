@@ -1,4 +1,7 @@
+# Import external dependencies
 from pydantic import BaseModel
+
+# Import internal dependencies
 from app.schemas.institution import Institution
 
 
