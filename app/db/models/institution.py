@@ -23,3 +23,4 @@ class Institution(Base):
     address = relationship(
         "Address", back_populates="institutions")
     educations = relationship("Education", back_populates="university")
+    experiences = relationship("Experience", back_populates="company")

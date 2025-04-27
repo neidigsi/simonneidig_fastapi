@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
+from app.db.models.experience import Experience
 
 
 class ExperienceTranslation(Base):

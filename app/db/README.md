@@ -1,11 +1,4 @@
-## Create Migrations
+# Database Layer
 
-```
-alembic revision --autogenerate -m "Change message"
-```
+## Structure
 
-## Appply Migrations
-
-```
-alembic upgrade head
-```

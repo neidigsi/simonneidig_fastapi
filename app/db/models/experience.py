@@ -1,10 +1,9 @@
 # Import external dependencies
-from sqlalchemy import Column, Double, Integer, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
-from app.db.models.institution import Institution
 
 
 class Experience(Base):
@@ -24,4 +23,4 @@ class Experience(Base):
     # Establishing relationships
     translations = relationship(
         "ExperienceTranslation", back_populates="experience")
-    company = relationship(Institution, back_populates="experiences")
+    company = relationship("Institution", back_populates="experiences")
