@@ -8,7 +8,5 @@ from app.db.models.social_media import SocialMedia
 
 def get_social_medias(db: Session):
     return db.execute(
-        select(
-            SocialMedia
-        )
-    ).all()
+        select(SocialMedia)
+    ).scalars().all()

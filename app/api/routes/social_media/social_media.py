@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.db.models import social_media as models
 from app.db.queries import social_media as crud
 from app.db.database import engine
-from app.schemas import social_media as schemass
+from app.schemas import social_media as schemas
 from app.services.db import get_db
 
 
