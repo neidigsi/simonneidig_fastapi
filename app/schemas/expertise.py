@@ -27,7 +27,7 @@ class Expertise(ExpertiseBase):
         description (str | None): A textual description of the expertise.
         icon (str | None): The icon associated with the expertise.
     """
-    expertise: str | None = None
+    title: str | None = None
     description: str | None = None 
     icon: str | None = None
 
