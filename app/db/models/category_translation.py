@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
-
+from app.db.models.category import Category  # Ensure Category is imported
 
 class CategoryTranslation(Base):
     __tablename__ = "category_translation"
