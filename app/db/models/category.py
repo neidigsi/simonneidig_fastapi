@@ -15,7 +15,7 @@ class Category(Base):
 
     # Establishing relationships
     translations = relationship(
-        "CategoryTranslation", back_populates="catego"
+        "CategoryTranslation", back_populates="category"
     )
     works = relationship(
         "Work",
