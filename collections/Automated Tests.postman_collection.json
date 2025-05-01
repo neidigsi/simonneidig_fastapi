@@ -1,0 +1,822 @@
+{
+	"info": {
+		"_postman_id": "20961b0d-bf53-445d-ad18-4f6f31d69009",
+		"name": "Automated Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9159996"
+	},
+	"item": [
+		{
+			"name": "Education",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Education / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{education-endpoint}}",
+													"host": [
+														"{{education-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Education / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{education-endpoint}}",
+													"host": [
+														"{{education-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Education / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{education-endpoint}}",
+													"host": [
+														"{{education-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Experience",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Experience / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{experience-endpoint}}",
+													"host": [
+														"{{experience-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Experience / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{experience-endpoint}}",
+													"host": [
+														"{{experience-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Experience / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{experience-endpoint}}",
+													"host": [
+														"{{experience-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Expertise",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Expertise / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{expertise-endpoint}}",
+													"host": [
+														"{{expertise-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Expertise / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{expertise-endpoint}}",
+													"host": [
+														"{{expertise-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Expertise / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{expertise-endpoint}}",
+													"host": [
+														"{{expertise-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Works",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Work / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Work / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{work-endpoint}}",
+													"host": [
+														"{{work-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Work / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Work / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{work-endpoint}}",
+													"host": [
+														"{{work-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Work / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Work / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{work-endpoint}}",
+													"host": [
+														"{{work-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Single",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Social Media",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Social Media / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{social-media-endpoint}}",
+													"host": [
+														"{{social-media-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Social Media / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{social-media-endpoint}}",
+													"host": [
+														"{{social-media-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Social Media / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{social-media-endpoint}}",
+													"host": [
+														"{{social-media-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Personal Information",
+			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.collectionVariables.set(\"collection-base-url\", pm.environment.get(\"base-url\"));"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "collection-base-url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "education-endpoint",
+			"value": "{{collection-base-url}}/education",
+			"type": "string"
+		},
+		{
+			"key": "experience-endpoint",
+			"value": "{{collection-base-url}}/experience",
+			"type": "string"
+		},
+		{
+			"key": "expertise-endpoint",
+			"value": "{{collection-base-url}}/expertise",
+			"type": "string"
+		},
+		{
+			"key": "social-media-endpoint",
+			"value": "{{collection-base-url}}/social-media",
+			"type": "string"
+		},
+		{
+			"key": "work-endpoint",
+			"value": "{{collection-base-url}}/work",
+			"type": "string"
+		}
+	]
+}

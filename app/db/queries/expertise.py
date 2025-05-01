@@ -18,7 +18,7 @@ def get_expertises(lang: str, db: Session):
         .where(ExpertiseTranslation.language.has(iso639_1=lang))
     ).all()
 
-    # Map the additional fields to the Experience object
+    # Map the additional fields to the expertise object
     result = []
     for exp, title, description in expertises:
         exp.title = title
