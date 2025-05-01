@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 from app.db.database import Base
 from app.db.models.education_translation import EducationTranslation
 from app.db.models.experience_translation import ExperienceTranslation
+from app.db.models.expertise_translation import ExpertiseTranslation
 
 
 class Language(Base):
@@ -21,4 +22,5 @@ class Language(Base):
     # Establishing relationships
     education_translations = relationship("EducationTranslation", back_populates="language")
     experience_translations = relationship("ExperienceTranslation", back_populates="language")
+    expertise_translations = relationship("ExpertiseTranslation", back_populates="language")
     institution_translations = relationship("InstitutionTranslation", back_populates="language")
