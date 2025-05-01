@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
-from app.db.models.associations import work_category  # Import work_category
 
 
 class Category(Base):
@@ -19,6 +18,6 @@ class Category(Base):
     )
     works = relationship(
         "Work",
-        secondary=work_category,  # Use the imported work_category table
+        secondary="work_category",  # Use string reference to avoid circular import
         back_populates="categories"
     )
