@@ -29,6 +29,7 @@ class Language(Base):
     experience_translations = relationship("ExperienceTranslation", back_populates="language")
     expertise_translations = relationship("ExpertiseTranslation", back_populates="language")
     institution_translations = relationship("InstitutionTranslation", back_populates="language")
+    page_translation = relationship("PageTranslation", back_populates="language")
     personal_details_translations = relationship("PersonalDetailsTranslation", back_populates="language")
     personal_information_translations = relationship("PersonalInformationTranslation", back_populates="language")
     work_translations = relationship("WorkTranslation", back_populates="language")
