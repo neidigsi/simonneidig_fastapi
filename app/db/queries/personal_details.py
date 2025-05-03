@@ -17,7 +17,7 @@ def get_personal_details(lang: str, db: Session):
         db (Session): The database session.
 
     Returns:
-        PersonalDetails: The first PersonalDetails object with translations.
+        PersonalDetails | None: The first PersonalDetails object with translations, or None if not found.
     """
     result = db.execute(
         select(

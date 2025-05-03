@@ -1,5 +1,5 @@
 # Import external dependencies
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 # Import internal dependencies
@@ -23,4 +23,7 @@ router = APIRouter(
 
 @router.get("/", response_model=schemas.PersonalDetails)
 async def get_personal_details(lang: str = Depends(get_language), db: Session = Depends(get_db)):
-    return crud.get_personal_details(lang, db)
+    personal_details = crud.get_personal_details(lang, db)
+    if not personal_details:
+        raise HTTPException(status_code=404, detail="Personal details not found")
+    return personal_details
