@@ -1,5 +1,5 @@
 # Import external dependencies
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 # Import internal dependencies
@@ -24,3 +24,11 @@ router = APIRouter(
 @router.get("/", response_model=list[schemas.Page])
 async def get_pages(lang: str = Depends(get_language), db: Session = Depends(get_db)):
     return crud.get_pages(lang, db)
+
+
+@router.get("/{tech_key}", response_model=schemas.Page)
+async def get_page(tech_key: str, lang: str = Depends(get_language), db: Session = Depends(get_db)):
+    page = crud.get_page(tech_key, lang, db)
+    if not page:
+        raise HTTPException(status_code=404, detail="Page not found")
+    return page
