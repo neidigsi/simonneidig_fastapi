@@ -7,6 +7,994 @@
 	},
 	"item": [
 		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / Successful request - Attribute 'name' correctly returned\", function () {",
+															"    pm.expect(body.name).to.eql('Testuser');",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / Successful request - Attribute 'email' correctly returned\", function () {",
+															"    pm.expect(body.email).to.eql('test@simon-neidig.de');",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / Successful request - Attribute 'message' correctly returned\", function () {",
+															"    pm.expect(body.message).to.eql('This is a test message.');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / No name - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / No name - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No email",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / No email - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / No email - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid email",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / Invalid email - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / Invalid email - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('value is not a valid email address: An email address must have an @-sign.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No message",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / No message - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / DE / No message - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / Successful request - Attribute 'name' correctly returned\", function () {",
+															"    pm.expect(body.name).to.eql('Testuser');",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / Successful request - Attribute 'email' correctly returned\", function () {",
+															"    pm.expect(body.email).to.eql('test@simon-neidig.de');",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / Successful request - Attribute 'message' correctly returned\", function () {",
+															"    pm.expect(body.message).to.eql('This is a test message.');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / No name - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / No name - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No email",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / No email - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / No email - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid email",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / Invalid email - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / Invalid email - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('value is not a valid email address: An email address must have an @-sign.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No message",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / No message - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / EN / No message - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / Successful request - Attribute 'name' correctly returned\", function () {",
+															"    pm.expect(body.name).to.eql('Testuser');",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / Successful request - Attribute 'email' correctly returned\", function () {",
+															"    pm.expect(body.email).to.eql('test@simon-neidig.de');",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / Successful request - Attribute 'message' correctly returned\", function () {",
+															"    pm.expect(body.message).to.eql('This is a test message.');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / No name - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / No name - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No email",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / No email - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / No email - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid email",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / Invalid email - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / Invalid email - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('value is not a valid email address: An email address must have an @-sign.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test\",\n    \"message\": \"This is a test message.\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No message",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / No message - Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Contact / Single / POST / FR / No message - Error message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{contact-endpoint}}",
+													"host": [
+														"{{contact-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "No language",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json()",
+													"",
+													"pm.test(\"Contact / Single / POST / No language - Status code is 201\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});",
+													"",
+													"pm.test(\"Contact / Single / POST / No language - Attribute 'name' correctly returned\", function () {",
+													"    pm.expect(body.name).to.eql('Testuser');",
+													"});",
+													"",
+													"pm.test(\"Contact / Single / POST / No language - Attribute 'email' correctly returned\", function () {",
+													"    pm.expect(body.email).to.eql('test@simon-neidig.de');",
+													"});",
+													"",
+													"pm.test(\"Contact / Single / POST / No language - Attribute 'message' correctly returned\", function () {",
+													"    pm.expect(body.message).to.eql('This is a test message.');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{contact-endpoint}}",
+											"host": [
+												"{{contact-endpoint}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid language",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json()",
+													"",
+													"pm.test(\"Contact / Single / POST / Invalid language - Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Contact / Single / POST / Invalid language - Error message as expected\", function () {",
+													"    pm.expect(body.detail).to.eql(\"Language 'abc' not found in the database.\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Language",
+												"value": "abc",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Testuser\",\n    \"email\": \"test@simon-neidig.de\",\n    \"message\": \"This is a test message.\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{contact-endpoint}}",
+											"host": [
+												"{{contact-endpoint}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Education",
 			"item": [
 				{
@@ -457,6 +1445,620 @@
 			]
 		},
 		{
+			"name": "Page",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Page / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{page-endpoint}}",
+													"host": [
+														"{{page-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Page / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{page-endpoint}}",
+													"host": [
+														"{{page-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Page / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{page-endpoint}}",
+													"host": [
+														"{{page-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{page-endpoint}}/imprint",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														"imprint"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{page-endpoint}}/imprint",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														"imprint"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{page-endpoint}}/imprint",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														"imprint"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Not found",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json()",
+													"",
+													"pm.test(\"Page / Single / GET / Not found - Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});",
+													"",
+													"pm.test(\"Page / Single / GET / Not found - Error message as expected\", function () {",
+													"    pm.expect(body.detail).to.eql('Page not found');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Language",
+												"value": "de",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{page-endpoint}}/asdf",
+											"host": [
+												"{{page-endpoint}}"
+											],
+											"path": [
+												"asdf"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Personal Details",
+			"item": [
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Details / All / GET / DE / Successful request - Response type is an object\", function () {",
+															"    pm.expect(body).to.be.an('object');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{personal-details-endpoint}}",
+													"host": [
+														"{{personal-details-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"",
+															"pm.test(\"Personal Details / All / GET / EN / Successful request - Response type is an object\", function () {",
+															"    pm.expect(body).to.be.an('object');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{personal-details-endpoint}}",
+													"host": [
+														"{{personal-details-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"",
+															"pm.test(\"Personal Details / All / GET / FR / Successful request - Response type is an object\", function () {",
+															"    pm.expect(body).to.be.an('object');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{personal-details-endpoint}}",
+													"host": [
+														"{{personal-details-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Personal Information",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{personal-information-endpoint}}",
+													"host": [
+														"{{personal-information-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{personal-information-endpoint}}",
+													"host": [
+														"{{personal-information-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{personal-information-endpoint}}",
+													"host": [
+														"{{personal-information-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Works",
 			"item": [
 				{
@@ -759,10 +2361,6 @@
 					]
 				}
 			]
-		},
-		{
-			"name": "Personal Information",
-			"item": []
 		}
 	],
 	"event": [
@@ -794,6 +2392,11 @@
 			"type": "string"
 		},
 		{
+			"key": "contact-endpoint",
+			"value": "{{collection-base-url}}/contact",
+			"type": "string"
+		},
+		{
 			"key": "education-endpoint",
 			"value": "{{collection-base-url}}/education",
 			"type": "string"
@@ -806,6 +2409,21 @@
 		{
 			"key": "expertise-endpoint",
 			"value": "{{collection-base-url}}/expertise",
+			"type": "string"
+		},
+		{
+			"key": "page-endpoint",
+			"value": "{{collection-base-url}}/page",
+			"type": "string"
+		},
+		{
+			"key": "personal-details-endpoint",
+			"value": "{{collection-base-url}}/personal-details",
+			"type": "string"
+		},
+		{
+			"key": "personal-information-endpoint",
+			"value": "{{collection-base-url}}/personal-information",
 			"type": "string"
 		},
 		{
