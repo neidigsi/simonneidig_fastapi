@@ -25,6 +25,7 @@ class Language(Base):
 
     # Establishing relationships
     category_translations = relationship("CategoryTranslation", back_populates="language")
+    contact = relationship("Contact", back_populates="language")
     education_translations = relationship("EducationTranslation", back_populates="language")
     experience_translations = relationship("ExperienceTranslation", back_populates="language")
     expertise_translations = relationship("ExpertiseTranslation", back_populates="language")
