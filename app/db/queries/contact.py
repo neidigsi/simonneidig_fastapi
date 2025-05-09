@@ -1,4 +1,5 @@
 # Import external dependencies
+from pydantic import ValidationError
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 
@@ -24,15 +25,19 @@ def save_contact(contact: SendingContact, db: Session, lang: str) -> Contact:
     if not language:
         raise ValueError(f"Language '{lang}' not found in the database.")
 
-    new_contact = Contact(
-        name=contact.name,
-        email=contact.email,
-        message=contact.message,
-        creation_date=datetime.now(timezone.utc),  # Use timezone from datetime
-        sended=False,  # Default value
-        language_id=language.id  # Associate the language
-    )
-    db.add(new_contact)
-    db.commit()
-    db.refresh(new_contact)
-    return new_contact
+    try:
+        new_contact = Contact(
+            name=contact.name,
+            email=contact.email,
+            message=contact.message,
+            creation_date=datetime.now(timezone.utc),  # Use timezone from datetime
+            sended=False,  # Default value
+            language_id=language.id  # Associate the language
+        )
+        db.add(new_contact)
+        db.commit()
+        db.refresh(new_contact)
+        return new_contact
+    except ValueError as e:
+        raise ValueError(f"Validation error: {e}")
+  
