@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
+from app.db.models.contact import Contact
 from app.db.models.category_translation import CategoryTranslation
 from app.db.models.education_translation import EducationTranslation
 from app.db.models.experience_translation import ExperienceTranslation
@@ -25,6 +26,7 @@ class Language(Base):
 
     # Establishing relationships
     category_translations = relationship("CategoryTranslation", back_populates="language")
+    contact = relationship("Contact", back_populates="language")
     education_translations = relationship("EducationTranslation", back_populates="language")
     experience_translations = relationship("ExperienceTranslation", back_populates="language")
     expertise_translations = relationship("ExpertiseTranslation", back_populates="language")
