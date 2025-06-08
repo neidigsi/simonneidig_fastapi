@@ -23,4 +23,5 @@ def get_language(request: Request):
         str: The preferred language code (e.g., "en", "de").
     """
     lang = request.headers.get("accept-language", "en")
-    return lang.split(",")[0].strip().lower()  # e.g., "de-DE,de;q=0.9" -> "de"
+    code = lang.split(",")[0].strip().lower()  # e.g., "en-GB,de;q=0.9" -> "en-GB"
+    return code.split("-")[0]  # "en-GB" -> "en", "de" -> "de"
