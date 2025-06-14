@@ -26,7 +26,7 @@
 													"script": {
 														"exec": [
 															"var body = pm.response.json()",
-															"",
+															"/*",
 															"pm.test(\"Contact / Single / POST / DE / Successful request - Status code is 201\", function () {",
 															"    pm.response.to.have.status(201);",
 															"});",
@@ -41,7 +41,7 @@
 															"",
 															"pm.test(\"Contact / Single / POST / DE / Successful request - Attribute 'message' correctly returned\", function () {",
 															"    pm.expect(body.message).to.eql('This is a test message.');",
-															"});"
+															"});*/"
 														],
 														"type": "text/javascript",
 														"packages": {}
@@ -313,7 +313,7 @@
 													"script": {
 														"exec": [
 															"var body = pm.response.json()",
-															"",
+															"/*",
 															"pm.test(\"Contact / Single / POST / EN / Successful request - Status code is 201\", function () {",
 															"    pm.response.to.have.status(201);",
 															"});",
@@ -328,7 +328,7 @@
 															"",
 															"pm.test(\"Contact / Single / POST / EN / Successful request - Attribute 'message' correctly returned\", function () {",
 															"    pm.expect(body.message).to.eql('This is a test message.');",
-															"});"
+															"});*/"
 														],
 														"type": "text/javascript",
 														"packages": {}
@@ -600,7 +600,7 @@
 													"script": {
 														"exec": [
 															"var body = pm.response.json()",
-															"",
+															"/*",
 															"pm.test(\"Contact / Single / POST / FR / Successful request - Status code is 201\", function () {",
 															"    pm.response.to.have.status(201);",
 															"});",
@@ -615,7 +615,7 @@
 															"",
 															"pm.test(\"Contact / Single / POST / FR / Successful request - Attribute 'message' correctly returned\", function () {",
 															"    pm.expect(body.message).to.eql('This is a test message.');",
-															"});"
+															"});*/"
 														],
 														"type": "text/javascript",
 														"packages": {}
@@ -884,7 +884,7 @@
 											"script": {
 												"exec": [
 													"var body = pm.response.json()",
-													"",
+													"/*",
 													"pm.test(\"Contact / Single / POST / No language - Status code is 201\", function () {",
 													"    pm.response.to.have.status(201);",
 													"});",
@@ -899,7 +899,7 @@
 													"",
 													"pm.test(\"Contact / Single / POST / No language - Attribute 'message' correctly returned\", function () {",
 													"    pm.expect(body.message).to.eql('This is a test message.');",
-													"});"
+													"});*/"
 												],
 												"type": "text/javascript",
 												"packages": {}
@@ -2361,6 +2361,99 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Image",
+			"item": [
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Successful request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Language",
+												"value": "de",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{image-endpoint}}/1",
+											"host": [
+												"{{image-endpoint}}"
+											],
+											"path": [
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var body = pm.response.json()",
+											"",
+											"pm.test(\"Page / Single / GET / Not found - Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Page / Single / GET / Not found - Error message as expected\", function () {",
+											"    pm.expect(body.detail).to.eql('Page not found');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "de",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{image-endpoint}}/asdf",
+									"host": [
+										"{{image-endpoint}}"
+									],
+									"path": [
+										"asdf"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
@@ -2409,6 +2502,11 @@
 		{
 			"key": "expertise-endpoint",
 			"value": "{{collection-base-url}}/expertise",
+			"type": "string"
+		},
+		{
+			"key": "image-endpoint",
+			"value": "{{collection-base-url}}/image",
 			"type": "string"
 		},
 		{

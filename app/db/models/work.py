@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
+from app.db.models.image import Image
 
 # Define the association table for the many-to-many relationship between Work and Category
 work_category = Table(
@@ -13,6 +14,7 @@ work_category = Table(
     Column('category_id', Integer, ForeignKey('category.id'), primary_key=True)
 )
 
+
 class Work(Base):
     __tablename__ = "work"
 
@@ -21,11 +23,14 @@ class Work(Base):
 
     # Content
     url = Column(String)
-    thumbnail = Column(String)
+    thumbnail_id = Column(Integer, ForeignKey("image.id"))
 
     # Establishing relationships
     translations = relationship(
         "WorkTranslation", back_populates="work")
+    thumbnail = relationship(
+        "Image", back_populates="work"
+    )
     categories = relationship(
         "Category",
         secondary=work_category,  # Reference the association table directly
