@@ -7,6 +7,7 @@ from app.api.routes.contact import contact
 from app.api.routes.education import education
 from app.api.routes.experience import experience
 from app.api.routes.expertise import expertise
+from app.api.routes.image import image
 from app.api.routes.page import page
 from app.api.routes.personal_details import personal_details
 from app.api.routes.personal_information import personal_information
@@ -31,6 +32,7 @@ app.include_router(contact.router)
 app.include_router(education.router)
 app.include_router(experience.router)
 app.include_router(expertise.router)
+app.include_router(image.router)
 app.include_router(page.router)
 app.include_router(personal_details.router)
 app.include_router(personal_information.router)

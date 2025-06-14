@@ -35,7 +35,7 @@ class Work(WorkBase):
     """
     title: str | None = None
     url: str | None = None
-    thumbnail: str | None = None
+    thumbnail_id: int | None = None
     categories: list[Category] | None = None
 
     class Config:

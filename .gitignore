@@ -106,6 +106,7 @@ alembic.ini
 
 .idea/
 .vscode/
+media/
 
 # Project
 postgres-data
