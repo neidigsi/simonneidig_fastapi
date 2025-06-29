@@ -1,6 +1,5 @@
 # Import external dependencies
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 # Import internal dependencies
 from app.api.routes.contact import contact
@@ -17,15 +16,6 @@ from app.api.routes.work import work
 
 # Initialize FastAPI app
 app = FastAPI()
-
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # Add routes to FastAPI app
 app.include_router(contact.router)

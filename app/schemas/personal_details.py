@@ -36,6 +36,8 @@ class PersonalDetails(PersonalDetailsBase):
     name: str | None = None
     position: str | None = None
     abstract: str | None = None
+    profile_picture_id: int | None = None
+
 
     class Config:
         """
