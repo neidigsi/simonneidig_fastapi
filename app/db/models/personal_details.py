@@ -1,5 +1,5 @@
 # Import external dependencies
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 # Import internal dependencies
@@ -14,7 +14,11 @@ class PersonalDetails(Base):
 
     # Content
     name = Column(String)
+    profile_picture_id = Column(Integer, ForeignKey("image.id"))
 
     # Establishing relationships
+    profile_picture = relationship(
+        "Image", back_populates="personal_details"
+    )
     translations = relationship(
         "PersonalDetailsTranslation", back_populates="personal_details")

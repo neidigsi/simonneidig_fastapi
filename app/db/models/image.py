@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 # Import internal dependencies
 from app.db.database import Base
+from app.db.models.personal_details import PersonalDetails
 
 
 class Image(Base):
@@ -19,4 +20,7 @@ class Image(Base):
     # Establishing relationships
     work = relationship(
         "Work", back_populates="thumbnail", uselist=False
+    )
+    personal_details = relationship(
+        "PersonalDetails", back_populates="profile_picture", uselist=False
     )
