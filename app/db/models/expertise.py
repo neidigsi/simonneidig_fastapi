@@ -14,6 +14,7 @@ class Expertise(Base):
 
     # Content
     icon = Column(String)
+    sort = Column(Integer)
 
     # Establishing relationships
     translations = relationship(

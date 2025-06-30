@@ -30,6 +30,7 @@ class Expertise(ExpertiseBase):
     title: str | None = None
     description: str | None = None 
     icon: str | None = None
+    sort: int | None = None
 
     class Config:
         """
