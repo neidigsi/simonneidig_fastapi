@@ -1,3 +1,16 @@
+"""
+Experience API Route for FastAPI
+
+Author: Simon Neidig
+
+This module provides the endpoint for retrieving experience entries via GET from `/experience/`.
+An "Experience" represents a professional or educational experience shown on the website.
+
+Main features:
+- Accepts GET requests to list experience entries.
+- Supports language selection via dependency injection.
+"""
+
 # Import external dependencies
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -14,6 +27,7 @@ from app.services.db import get_db
 models.Base.metadata.create_all(bind=engine)
 
 
+# Create a new APIRouter instance for the experience API
 router = APIRouter(
     prefix="/experience",
     tags=["experience"],
@@ -23,4 +37,14 @@ router = APIRouter(
 
 @router.get("/", response_model=list[schemas.Experience])
 async def get_experiences(lang: str = Depends(get_language), db: Session = Depends(get_db)):
+    """
+    Retrieves a list of experience entries.
+
+    Args:
+        lang (str): Language code, injected via dependency.
+        db (Session): Database session, injected via dependency.
+
+    Returns:
+        list[Experience]: List of experience entries.
+    """
     return crud.get_experiences(lang, db)
