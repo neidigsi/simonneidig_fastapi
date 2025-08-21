@@ -1,3 +1,11 @@
+"""
+ExpertiseTranslation DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines localized title/description entries for Expertise.
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -10,6 +18,18 @@ from app.db.models.expertise import Expertise
 class ExpertiseTranslation(Base):
     __tablename__ = "expertise_translation"
 
+    """
+    Database object: ExpertiseTranslation
+
+    Stores localized title and description for an Expertise entry.
+
+    Attributes:
+        id (int): Primary key.
+        title (str): Localized title.
+        description (str): Localized description.
+        expertise_id (int): FK to Expertise.
+        language_id (int): FK to Language.
+    """
     # Primary key
     id = Column(Integer, primary_key=True)
 

@@ -1,7 +1,7 @@
 """
 Contact API Route for FastAPI
 
-Author: Simon Neidig
+Author: Simon Neidig <mail@simonneidig.de>
 
 This module provides the endpoint for submitting contact requests via POST to `/contact/`.
 A "Contact" represents a contact inquiry submitted via the website.

@@ -1,3 +1,11 @@
+"""
+PersonalDetailsTranslation DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines localized fields for PersonalDetails (e.g., position, abstract).
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -10,6 +18,18 @@ from app.db.models.personal_details import PersonalDetails
 class PersonalDetailsTranslation(Base):
     __tablename__ = "personal_details_translation"
 
+    """
+    Database object: PersonalDetailsTranslation
+
+    Stores localized long-form personal details such as position and abstract.
+
+    Attributes:
+        id (int): Primary key.
+        position (str): Localized position/title.
+        abstract (str): Localized bio/abstract.
+        personal_details_id (int): FK to PersonalDetails.
+        language_id (int): FK to Language.
+    """
     # Primary key
     id = Column(Integer, primary_key=True)
 

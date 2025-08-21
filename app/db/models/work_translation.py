@@ -1,3 +1,12 @@
+"""
+WorkTranslation DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+Defines localized titles for Work (portfolio) entries. Each translation associates
+a Work with a Language and contains the localized title.
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -10,6 +19,17 @@ from app.db.models.work import Work
 class WorkTranslation(Base):
     __tablename__ = "work_translation"
 
+    """
+    Database object: WorkTranslation
+
+    Stores the localized title for a Work entry.
+
+    Attributes:
+        id (int): Primary key.
+        title (str): Localized title.
+        work_id (int): FK to Work.
+        language_id (int): FK to Language.
+    """
     # Primary key
     id = Column(Integer, primary_key=True)
 

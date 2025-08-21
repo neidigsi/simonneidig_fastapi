@@ -1,3 +1,13 @@
+"""
+FastAPI application entrypoint
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module creates and configures the FastAPI application instance and includes
+all API routers used by the backend. Importing this module prepares the app for
+running (e.g. via uvicorn).
+"""
+
 # Import external dependencies
 from fastapi import FastAPI
 

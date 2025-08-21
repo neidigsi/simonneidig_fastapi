@@ -1,7 +1,7 @@
 """
 Education API Route for FastAPI
 
-Author: Simon Neidig
+Author: Simon Neidig <mail@simonneidig.de>
 
 This module provides the endpoint for retrieving education entries via GET from `/education/`.
 An "Education" represents an educational qualification or degree shown on the website.

@@ -1,3 +1,12 @@
+"""
+Work DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines the Work model which represents a portfolio item or project shown on the website.
+A Work can have translations, a thumbnail image, and belong to multiple categories.
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
@@ -17,6 +26,22 @@ work_category = Table(
 
 class Work(Base):
     __tablename__ = "work"
+
+    """
+    Database object: Work
+
+    Represents a portfolio entry or project.
+
+    Attributes:
+        id (int): Primary key.
+        url (str): External URL to the project or demo.
+        thumbnail_id (int): FK to Image used as thumbnail.
+
+    Relationships:
+        translations: localized titles/descriptions (WorkTranslation).
+        thumbnail: Image used as thumbnail (one-to-one-ish).
+        categories: many-to-many relationship to Category.
+    """
 
     # Primary key
     id = Column(Integer, primary_key=True)

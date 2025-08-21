@@ -1,3 +1,13 @@
+"""
+Page query helpers
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module provides helper functions to load Page objects together with their
+localized translation fields (title, abstract, html) for a requested language.
+Functions here map translation fields onto Page model instances for API consumption.
+"""
+
 # Import external dependencies
 from sqlalchemy import select
 from sqlalchemy.orm import Session

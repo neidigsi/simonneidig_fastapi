@@ -1,3 +1,14 @@
+"""
+Work query helpers
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module provides helper functions to load Work (portfolio) entries together with
+their localized title and associated categories for a requested language. The helper
+maps translation fields and localized category names onto Work model instances for
+API consumption.
+"""
+
 # Import external dependencies
 from sqlalchemy import select
 from sqlalchemy.orm import Session

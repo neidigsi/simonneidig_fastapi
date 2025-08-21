@@ -1,7 +1,7 @@
 """
 Experience API Route for FastAPI
 
-Author: Simon Neidig
+Author: Simon Neidig <mail@simonneidig.de>
 
 This module provides the endpoint for retrieving experience entries via GET from `/experience/`.
 An "Experience" represents a professional or educational experience shown on the website.

@@ -1,7 +1,7 @@
 """
 Social Media API Route for FastAPI
 
-Author: Simon Neidig
+Author: Simon Neidig <mail@simonneidig.de>
 
 This module provides the endpoint for retrieving social media links via GET from `/social-media/`.
 A "SocialMedia" entry represents a social media profile or link shown on the website.

@@ -1,7 +1,7 @@
 """
 Personal Details API Route for FastAPI
 
-Author: Simon Neidig
+Author: Simon Neidig <mail@simonneidig.de>
 
 This module provides the endpoint for retrieving personal details via GET from `/personal-details/`.
 "PersonalDetails" represents detailed personal data shown on the website.

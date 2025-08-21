@@ -1,7 +1,7 @@
 """
 Personal Information API Route for FastAPI
 
-Author: Simon Neidig
+Author: Simon Neidig <mail@simonneidig.de>
 
 This module provides the endpoint for retrieving personal information via GET from `/personal-information/`.
 A "PersonalInformation" entry represents short personal details such as location, email address, etc. displayed on the website.

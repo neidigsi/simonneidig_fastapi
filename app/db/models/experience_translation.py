@@ -1,3 +1,11 @@
+"""
+ExperienceTranslation DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines localized fields for Experience entries (title, extract, description, industry).
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -10,6 +18,20 @@ from app.db.models.experience import Experience
 class ExperienceTranslation(Base):
     __tablename__ = "experience_translation"
 
+    """
+    Database object: ExperienceTranslation
+
+    Stores localized metadata for an Experience.
+
+    Attributes:
+        id (int): Primary key.
+        title (str): Localized title.
+        extract (str): Localized short extract.
+        description (str): Localized full description.
+        industry (str): Industry label.
+        experience_id (int): FK to Experience.
+        language_id (int): FK to Language.
+    """
     # Primary key
     id = Column(Integer, primary_key=True)
 
