@@ -1,3 +1,17 @@
+"""
+Database configuration and session factory
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module configures the SQLAlchemy engine, session factory and declarative base
+used throughout the application.
+
+Main features:
+- Creates the engine from configuration.
+- Exposes a scoped SessionLocal for request-scoped DB sessions.
+- Provides the Base declarative class for model definitions.
+"""
+
 # Import external dependencies
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base

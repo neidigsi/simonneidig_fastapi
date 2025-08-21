@@ -1,3 +1,16 @@
+"""
+Personal Information API Route for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module provides the endpoint for retrieving personal information via GET from `/personal-information/`.
+A "PersonalInformation" entry represents short personal details such as location, email address, etc. displayed on the website.
+
+Main features:
+- Accepts GET requests to list personal information.
+- Supports language selection via dependency injection.
+"""
+
 # Import external dependencies
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -14,6 +27,7 @@ from app.services.db import get_db
 models.Base.metadata.create_all(bind=engine)
 
 
+# Create a new APIRouter instance for the personal information API
 router = APIRouter(
     prefix="/personal-information",
     tags=["personal-information"],
@@ -23,4 +37,14 @@ router = APIRouter(
 
 @router.get("/", response_model=list[schemas.PersonalInformation])
 async def get_personal_information(lang: str = Depends(get_language), db: Session = Depends(get_db)):
+    """
+    Retrieves a list of personal information entries.
+
+    Args:
+        lang (str): Language code, injected via dependency.
+        db (Session): Database session, injected via dependency.
+
+    Returns:
+        list[PersonalInformation]: List of personal information entries.
+    """
     return crud.get_personal_information(lang, db)

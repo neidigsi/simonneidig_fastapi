@@ -1,3 +1,11 @@
+"""
+EducationTranslation DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines localized course/description entries for Education records.
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -9,6 +17,19 @@ from app.db.models.education import Education
 
 class EducationTranslation(Base):
     __tablename__ = "education_translation"
+
+    """
+    Database object: EducationTranslation
+
+    Stores localized course_of_study and description.
+
+    Attributes:
+        id (int): Primary key.
+        course_of_study (str): Localized course name.
+        description (str): Localized description.
+        education_id (int): FK to Education.
+        language_id (int): FK to Language.
+    """
 
     # Primary key
     id = Column(Integer, primary_key=True)

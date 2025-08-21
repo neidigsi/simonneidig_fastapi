@@ -1,3 +1,19 @@
+"""
+Contact API Route for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module provides the endpoint for submitting contact requests via POST to `/contact/`.
+A "Contact" represents a contact inquiry submitted via the website.
+It validates input, handles errors, and persists contact data to the database.
+
+Main features:
+- Accepts POST requests with `name`, `email`, and `message`.
+- Validates and parses input using Pydantic.
+- Handles validation and database errors with appropriate HTTP responses.
+- Supports language selection via dependency injection.
+"""
+
 # Import external dependencies
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
@@ -9,13 +25,13 @@ from app.db.queries.contact import save_contact
 from app.db.database import engine
 from app.schemas import contact as schemas
 from app.services.i18n import get_language
-
 from app.services.db import get_db
 
 
 models.Base.metadata.create_all(bind=engine)
 
 
+# Create a new APIRouter instance for the contact API
 router = APIRouter(
     prefix="/contact",
     tags=["contact"],
@@ -29,6 +45,25 @@ async def post_contact(
     lang: str = Depends(get_language),
     db: Session = Depends(get_db)
 ):
+    """
+    Receives and processes a contact request.
+
+    - Parses and validates the request body.
+    - Checks for required fields.
+    - Saves the contact to the database.
+    - Returns the saved contact or an error message.
+
+    Args:
+        request (Request): FastAPI request object.
+        lang (str): Language code, injected via dependency. Usually a iso 2 code is used.
+        db (Session): Database session, injected via dependency.
+
+    Returns:
+        SendingContact: The saved contact data.
+
+    Raises:
+        HTTPException: On validation or database errors.
+    """
     try:
         # Parse and validate the request body
         body = await request.json()
