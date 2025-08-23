@@ -63,7 +63,7 @@ The codebase is organized for clarity and scalability. For a detailed overview o
 ### Multi Language Support
 
 As a freelancer with roots in Germany and based in France, supporting multiple markets is essential. The application currently supports German, English, and French.  
-For implementation details, see section "Multi Language Support in [./app//README.md](./app/README.md).
+For implementation details, see section "Multi Language Support in [./app/README.md](./app/README.md).
 
 ### Database Access
 
