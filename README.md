@@ -74,7 +74,7 @@ If a [database model](./app/db/models) is changed, database changesets for migra
 
 ### Testing
 
-Testing plays an important role in ensuring the high quality of the software. At the current stage, the focus is primarily on black-box API testing using Postman. For details on how this works, see the documentation at [./.postman/README.md].
+Testing plays an important role in ensuring the high quality of the software. At the current stage, the focus is primarily on black-box API testing using Postman. For details on how this works, see the documentation at [./.postman/README.md](./.postman/README.md).
 
 At a later stage of development, more unit tests will be introduced.
 
