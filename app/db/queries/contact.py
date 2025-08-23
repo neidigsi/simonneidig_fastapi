@@ -1,3 +1,18 @@
+"""
+Contact queries for the database
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module contains database query helpers related to contact inquiries submitted via the website.
+A "Contact" represents a message submitted through the site's contact form; these helpers
+handle persisting such inquiries and associating them with a language record.
+
+Main features:
+- Persist contact inquiries to the database.
+- Resolve and validate language association by ISO639-1 code.
+- Provide a simple, reusable API for other services/routes to save contact messages.
+"""
+
 # Import external dependencies
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
@@ -40,4 +55,4 @@ def save_contact(contact: SendingContact, db: Session, lang: str) -> Contact:
         return new_contact
     except ValueError as e:
         raise ValueError(f"Validation error: {e}")
-  
+

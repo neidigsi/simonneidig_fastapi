@@ -1,3 +1,11 @@
+"""
+Category DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines categories used to classify works or projects.
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
@@ -8,6 +16,19 @@ from app.db.database import Base
 
 class Category(Base):
     __tablename__ = "category"
+
+    """
+    Database object: Category
+
+    Represents a category/classification for Work entries.
+
+    Attributes:
+        id (int): Primary key.
+
+    Relationships:
+        translations: localized category names.
+        works: many-to-many link to Work.
+    """
 
     # Primary key
     id = Column(Integer, primary_key=True)

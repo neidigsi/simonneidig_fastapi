@@ -1,3 +1,14 @@
+"""
+Education query helpers
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module provides helper functions to load Education objects together with their
+localized translation fields (course_of_study, description) and the localized
+institution name for a requested language. Results are mapped onto Education
+instances for API consumption.
+"""
+
 # Import external dependencies
 from sqlalchemy import select
 from sqlalchemy.orm import Session

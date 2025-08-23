@@ -1,3 +1,11 @@
+"""
+InstitutionTranslation DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines localized names for Institution objects.
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -9,6 +17,17 @@ from app.db.database import Base
 class InstitutionTranslation(Base):
     __tablename__ = "institution_translation"
 
+    """
+    Database object: InstitutionTranslation
+
+    Stores the localized name for an Institution.
+
+    Attributes:
+        id (int): Primary key.
+        name (str): Localized institution name.
+        institution_id (int): FK to Institution.
+        language_id (int): FK to Language.
+    """
     # Primary key
     id = Column(Integer, primary_key=True)
 

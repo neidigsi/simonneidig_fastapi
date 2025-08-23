@@ -1,3 +1,16 @@
+"""
+Education API Route for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module provides the endpoint for retrieving education entries via GET from `/education/`.
+An "Education" represents an educational qualification or degree shown on the website.
+
+Main features:
+- Accepts GET requests to list education entries.
+- Supports language selection via dependency injection.
+"""
+
 # Import external dependencies
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -23,4 +36,14 @@ router = APIRouter(
 
 @router.get("/", response_model=list[schemas.Education])
 async def get_education(lang: str = Depends(get_language), db: Session = Depends(get_db)):
+    """
+    Retrieves a list of education entries.
+
+    Args:
+        lang (str): Language code, injected via dependency.
+        db (Session): Database session, injected via dependency.
+
+    Returns:
+        list[Education]: List of education entries.
+    """
     return crud.get_educations(lang, db)

@@ -1,3 +1,12 @@
+"""
+Language DB model for FastAPI
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module defines the Language model which represents supported languages
+for localized content via an ISO639-1 code.
+"""
+
 # Import external dependencies
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
@@ -17,6 +26,19 @@ from app.db.models.work_translation import WorkTranslation
 class Language(Base):
     __tablename__ = "language"
 
+    """
+    Database object: Language
+
+    Represents a supported language used throughout the application.
+
+    Attributes:
+        id (int): Primary key.
+        name (str): Full language name (e.g., 'English').
+        iso639_1 (str): Two-letter ISO 639-1 code (e.g., 'en', 'de', 'fr').
+
+    Relationships:
+        Various *_translations relationships link localized content to this language.
+    """
     # Primary key
     id = Column(Integer, primary_key=True)
     

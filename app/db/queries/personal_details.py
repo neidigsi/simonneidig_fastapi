@@ -1,3 +1,14 @@
+"""
+Personal details query helpers
+
+Author: Simon Neidig <mail@simonneidig.de>
+
+This module provides a helper to load the primary PersonalDetails record together
+with its localized fields (position, abstract) for a requested language.
+The function maps translation fields onto the PersonalDetails model instance
+so the returned object can be directly consumed by the API layer.
+"""
+
 # Import external dependencies
 from sqlalchemy import select
 from sqlalchemy.orm import Session
