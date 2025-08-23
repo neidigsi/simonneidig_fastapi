@@ -43,8 +43,8 @@ class Contact(Base):
     id = Column(Integer, primary_key=True)
 
     # Content
-    creation_date = Column(DateTime)  # Changed to DateTime
-    sending_date = Column(DateTime)  # Changed to DateTime
+    creation_date = Column(DateTime)
+    sending_date = Column(DateTime)
     sended = Column(Boolean)
     name = Column(String)
     email = Column(String)
