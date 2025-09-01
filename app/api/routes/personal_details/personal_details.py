@@ -22,10 +22,7 @@ from app.db.queries import personal_details as crud
 from app.db.database import engine
 from app.schemas import personal_details as schemas
 from app.services.i18n import get_language
-from app.services.db import get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app.services.db import get_async_session
 
 
 # Create a new APIRouter instance for the personal details API
@@ -37,7 +34,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=schemas.PersonalDetails)
-async def get_personal_details(lang: str = Depends(get_language), db: Session = Depends(get_db)):
+async def get_personal_details(lang: str = Depends(get_language), db: Session = Depends(get_async_session)):
     """
     Retrieves personal details.
 

@@ -22,10 +22,7 @@ from sqlalchemy.orm import Session
 from app.db.models import image as models
 from app.db.queries import image as crud
 from app.db.database import engine
-from app.services.db import get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app.services.db import get_async_session
 
 
 # Create a new APIRouter instance for the image API
@@ -37,7 +34,7 @@ router = APIRouter(
 
 
 @router.get("/{image_id}", response_class=FileResponse)
-def get_image(image_id: int, db: Session = Depends(get_db)):
+def get_image(image_id: int, db: Session = Depends(get_async_session)):
     """
     Retrieves an image file by its ID.
 
