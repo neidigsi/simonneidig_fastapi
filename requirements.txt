@@ -32,7 +32,7 @@ pip-api==0.0.34
 pip-requirements-parser==32.0.1
 psycopg2==2.9.10
 py-serializable==2.0.0
-pydantic==2.11.3
+pydantic==2.11.7
 pydantic_core==2.33.1
 Pygments==2.19.2
 pyparsing==3.2.3
