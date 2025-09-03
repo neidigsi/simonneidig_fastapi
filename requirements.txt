@@ -51,7 +51,7 @@ toml==0.10.2
 typer==0.15.2
 typing_extensions==4.13.2
 ujson==5.10.0
-urllib3==2.4.0
+urllib3==2.5.0
 uvicorn==0.34.2
 uvloop==0.21.0
 watchfiles==1.1.0
