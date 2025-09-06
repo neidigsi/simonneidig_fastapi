@@ -11,37 +11,38 @@ so the returned object can be directly consumed by the API layer.
 
 # Import external dependencies
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
 from app.db.models.personal_details import PersonalDetails
 from app.db.models.personal_details_translation import PersonalDetailsTranslation
 
 
-def get_personal_details(lang: str, db: Session):
+async def get_personal_details(lang: str, db: AsyncSession):
     """
     Fetch the first PersonalDetails object with its position and abstract
     populated from the corresponding translation for the specified language.
 
     Args:
         lang (str): The language code (e.g., "en", "de").
-        db (Session): The database session.
+        db (AsyncSession): The async SQLAlchemy session.
 
     Returns:
         PersonalDetails | None: The first PersonalDetails object with translations, or None if not found.
     """
-    result = db.execute(
+    result = await db.execute(
         select(
             PersonalDetails,
             PersonalDetailsTranslation.position,
-            PersonalDetailsTranslation.abstract
+            PersonalDetailsTranslation.abstract,
         )
         .join(PersonalDetailsTranslation)
         .where(PersonalDetailsTranslation.language.has(iso639_1=lang))
-    ).first()
+    )
 
-    if result:
-        personal_details, position, abstract = result
+    row = result.first()
+    if row:
+        personal_details, position, abstract = row
         personal_details.position = position
         personal_details.abstract = abstract
         return personal_details

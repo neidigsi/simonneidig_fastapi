@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 from app.db.models.social_media import SocialMedia
 
 
-def get_social_medias(db: Session):
-    return db.execute(
-        select(SocialMedia)
-    ).scalars().all()
+async def get_social_medias(db: Session):
+    result = await db.execute(select(SocialMedia))
+    
+    return result.scalars().all()

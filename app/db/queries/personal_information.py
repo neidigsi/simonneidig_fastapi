@@ -10,14 +10,14 @@ have its localized label and value mapped onto the object for API consumption.
 
 # Import external dependencies
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
 from app.db.models.personal_information import PersonalInformation
 from app.db.models.personal_information_translation import PersonalInformationTranslation
 
 
-def get_personal_information(lang: str, db: Session):
+async def get_personal_information(lang: str, db: AsyncSession):
     """
     Retrieve personal information entries for a given language.
 
@@ -29,21 +29,26 @@ def get_personal_information(lang: str, db: Session):
         list[PersonalInformation]: List of PersonalInformation objects with
         `label` and `value` attributes populated from the translation table.
     """
-    personal_information = db.execute(
+    result = await db.execute(
         select(
             PersonalInformation,
             PersonalInformationTranslation.label,
             PersonalInformationTranslation.value
         )
-        .join(PersonalInformationTranslation)
+        .join(
+            PersonalInformationTranslation,
+            PersonalInformationTranslation.personal_information_id == PersonalInformation.id,
+            )
         .where(PersonalInformationTranslation.language.has(iso639_1=lang))
-    ).all()
+    )
+    
+    personal_information = result.all()
 
     # Map the additional fields to the personal information object
-    result = []
+    mapped_results = []
     for info, label, value in personal_information:
         info.label = label
         info.value = value
-        result.append(info)
+        mapped_results.append(info)
     
-    return result
+    return mapped_results

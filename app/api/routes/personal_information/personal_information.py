@@ -13,18 +13,13 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import personal_information as models
 from app.db.queries import personal_information as crud
-from app.db.database import engine
 from app.schemas import personal_information as schemas
 from app.services.i18n import get_language
-from app.services.db import get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app.services.db import get_async_session
 
 
 # Create a new APIRouter instance for the personal information API
@@ -36,7 +31,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.PersonalInformation])
-async def get_personal_information(lang: str = Depends(get_language), db: Session = Depends(get_db)):
+async def get_personal_information(lang: str = Depends(get_language), db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves a list of personal information entries.
 
@@ -47,4 +42,4 @@ async def get_personal_information(lang: str = Depends(get_language), db: Sessio
     Returns:
         list[PersonalInformation]: List of personal information entries.
     """
-    return crud.get_personal_information(lang, db)
+    return await crud.get_personal_information(lang, db)

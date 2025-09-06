@@ -17,7 +17,7 @@ from app.db.models.expertise import Expertise
 from app.db.models.expertise_translation import ExpertiseTranslation
 
 
-def get_expertises(lang: str, db: Session):
+async def get_expertises(lang: str, db: Session):
     """
     Retrieve expertise entries for the given language.
 
@@ -29,7 +29,7 @@ def get_expertises(lang: str, db: Session):
         list[Expertise]: List of Expertise objects with `title` and `description`
         attributes populated from the translation table.
     """
-    expertises = db.execute(
+    result = await db.execute(
         select(
             Expertise,
             ExpertiseTranslation.title,
@@ -37,13 +37,15 @@ def get_expertises(lang: str, db: Session):
         )
         .join(ExpertiseTranslation)
         .where(ExpertiseTranslation.language.has(iso639_1=lang))
-    ).all()
+    )
+    
+    expertises = result.all()
 
     # Map the additional fields to the expertise object
-    result = []
+    mapped_results = []
     for exp, title, description in expertises:
         exp.title = title
         exp.description = description
-        result.append(exp)
+        mapped_results.append(exp)
 
-    return result
+    return mapped_results
