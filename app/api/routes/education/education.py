@@ -13,12 +13,10 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import education as models
 from app.db.queries import education as crud
-from app.db.database import engine
 from app.schemas import education as schemas
 from app.services.i18n import get_language
 from app.services.db import get_async_session
@@ -32,7 +30,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.Education])
-async def get_education(lang: str = Depends(get_language), db: Session = Depends(get_async_session)):
+async def get_education(lang: str = Depends(get_language), db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves a list of education entries.
 
@@ -43,4 +41,4 @@ async def get_education(lang: str = Depends(get_language), db: Session = Depends
     Returns:
         list[Education]: List of education entries.
     """
-    return crud.get_educations(lang, db)
+    return await crud.get_educations(lang, db)
