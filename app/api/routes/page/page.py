@@ -13,12 +13,10 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import page as models
 from app.db.queries import page as crud
-from app.db.database import engine
 from app.schemas import page as schemas
 from app.services.i18n import get_language
 from app.services.db import get_async_session
@@ -33,7 +31,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.Page])
-async def get_pages(lang: str = Depends(get_language), db: Session = Depends(get_async_session)):
+async def get_pages(lang: str = Depends(get_language), db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves a list of pages.
 
@@ -44,11 +42,11 @@ async def get_pages(lang: str = Depends(get_language), db: Session = Depends(get
     Returns:
         list[Page]: List of pages.
     """
-    return crud.get_pages(lang, db)
+    return await crud.get_pages(lang, db)
 
 
 @router.get("/{tech_key}", response_model=schemas.Page)
-async def get_page(tech_key: str, lang: str = Depends(get_language), db: Session = Depends(get_async_session)):
+async def get_page(tech_key: str, lang: str = Depends(get_language), db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves a single page by its technical key.
 
@@ -63,7 +61,7 @@ async def get_page(tech_key: str, lang: str = Depends(get_language), db: Session
     Raises:
         HTTPException: If the page is not found.
     """
-    page = crud.get_page(tech_key, lang, db)
+    page = await crud.get_page(tech_key, lang, db)
     if not page:
         raise HTTPException(status_code=404, detail="Page not found")
     return page
