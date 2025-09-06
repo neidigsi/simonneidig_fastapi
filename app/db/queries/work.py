@@ -11,7 +11,7 @@ API consumption.
 
 # Import external dependencies
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
 from app.db.models.work import Work
@@ -19,29 +19,52 @@ from app.db.models.work_translation import WorkTranslation
 from app.db.models.category import Category
 from app.db.models.category_translation import CategoryTranslation
 
-def get_works(lang: str, db: Session):
-    works = db.execute(
+
+async def get_works(lang: str, db: AsyncSession):
+    """
+    Async helper to retrieve works with localized title and localized category names.
+
+    Args:
+        lang (str): Two-letter ISO639-1 language code.
+        db (AsyncSession): Async SQLAlchemy session.
+
+    Returns:
+        list[Work]: Work instances with `title` and `categories` populated (categories include localized `name`).
+    """
+    result = await db.execute(
         select(
             Work,
             WorkTranslation.title,
             Category,
-            CategoryTranslation.name
+            CategoryTranslation.name.label("category_name"),
         )
         .join(WorkTranslation)
-        .join(Work.categories)  # Assuming Work has a relationship to Category
-        .join(CategoryTranslation)
+        .join(Work.categories)  # join to Category
+        .join(
+            CategoryTranslation,
+            CategoryTranslation.category_id == Category.id,
+        )
         .where(WorkTranslation.language.has(iso639_1=lang))
         .where(CategoryTranslation.language.has(iso639_1=lang))
-    ).all()
+    )
 
-    # Map the additional fields to the work object
-    work_map = {}
-    for work, title, category, category_name in works:
-        if work.id not in work_map:
-            work.title = title
-            work.categories = []
-            work_map[work.id] = work
-        category.name = category_name
-        work_map[work.id].categories.append(category)
+    rows = result.all()
 
+    # Map the additional fields into plain dicts to avoid any lazy-loading on ORM objects
+    work_map: dict[int, dict] = {}
+    for work, title, category, category_name in rows:
+        wid = work.id
+        if wid not in work_map:
+            work_map[wid] = {
+                "id": wid,
+                "url": getattr(work, "url", None),
+                "thumbnail_id": getattr(work, "thumbnail_id", None) or getattr(work, "thumbnail", None),
+                "title": title,
+                "categories": [],
+            }
+        # append localized category name as plain dict (include id to satisfy response schema)
+        cat_id = getattr(category, "id", None)
+        work_map[wid]["categories"].append({"id": cat_id, "name": category_name})
+
+    # Return a list of plain dicts compatible with the Work Pydantic schema
     return list(work_map.values())
