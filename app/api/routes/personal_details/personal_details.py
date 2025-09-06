@@ -14,12 +14,10 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import personal_details as models
 from app.db.queries import personal_details as crud
-from app.db.database import engine
 from app.schemas import personal_details as schemas
 from app.services.i18n import get_language
 from app.services.db import get_async_session
@@ -34,7 +32,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=schemas.PersonalDetails)
-async def get_personal_details(lang: str = Depends(get_language), db: Session = Depends(get_async_session)):
+async def get_personal_details(lang: str = Depends(get_language), db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves personal details.
 
@@ -48,7 +46,7 @@ async def get_personal_details(lang: str = Depends(get_language), db: Session = 
     Raises:
         HTTPException: If no personal details are found.
     """
-    personal_details = crud.get_personal_details(lang, db)
+    personal_details = await crud.get_personal_details(lang, db)
     if not personal_details:
         raise HTTPException(status_code=404, detail="Personal details not found")
     return personal_details

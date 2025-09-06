@@ -16,12 +16,10 @@ Main features:
 import os
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import image as models
 from app.db.queries import image as crud
-from app.db.database import engine
 from app.services.db import get_async_session
 
 
@@ -34,7 +32,7 @@ router = APIRouter(
 
 
 @router.get("/{image_id}", response_class=FileResponse)
-def get_image(image_id: int, db: Session = Depends(get_async_session)):
+async def get_image(image_id: int, db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves an image file by its ID.
 
@@ -48,7 +46,7 @@ def get_image(image_id: int, db: Session = Depends(get_async_session)):
     Raises:
         HTTPException: If the image or file is not found.
     """
-    image = crud.get_image(image_id, db)
+    image = await crud.get_image(image_id, db)
 
     if not image:
         raise HTTPException(status_code=404, detail="Image not found")

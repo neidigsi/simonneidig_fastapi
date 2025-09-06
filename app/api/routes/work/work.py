@@ -14,12 +14,10 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import work as models
 from app.db.queries import work as crud
-from app.db.database import engine
 from app.schemas import work as schemas
 from app.services.i18n import get_language
 from app.services.db import get_async_session
@@ -34,7 +32,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.Work])
-async def get_works(lang: str = Depends(get_language), db: Session = Depends(get_async_session)):
+async def get_works(lang: str = Depends(get_language), db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves a list of work entries.
 
@@ -46,4 +44,4 @@ async def get_works(lang: str = Depends(get_language), db: Session = Depends(get
         list[Work]: List of work items.
 
     """
-    return crud.get_works(lang, db)
+    return await crud.get_works(lang, db)
