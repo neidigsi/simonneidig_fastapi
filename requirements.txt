@@ -1,4 +1,5 @@
 alembic==1.15.2
+asyncpg==0.30.0
 annotated-types==0.7.0
 anyio==4.9.0
 boolean.py==5.0
@@ -11,6 +12,8 @@ dnspython==2.7.0
 email_validator==2.2.0
 fastapi==0.115.12
 fastapi-cli==0.0.7
+fastapi-users==14.0.1
+fastapi-users-db-sqlalchemy==7.0.0
 filelock==3.18.0
 h11==0.16.0
 html5lib==1.1
@@ -33,7 +36,7 @@ pip-requirements-parser==32.0.1
 psycopg2==2.9.10
 py-serializable==2.0.0
 pydantic==2.11.7
-pydantic_core==2.33.1
+pydantic_core==2.33.2
 Pygments==2.19.2
 pyparsing==3.2.3
 python-dotenv==1.1.1

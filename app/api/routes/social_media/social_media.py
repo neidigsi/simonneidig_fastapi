@@ -12,17 +12,12 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import social_media as models
 from app.db.queries import social_media as crud
-from app.db.database import engine
 from app.schemas import social_media as schemas
-from app.services.db import get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app.services.db import get_async_session
 
 
 # Create a new APIRouter instance for the social media API
@@ -34,7 +29,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.SocialMedia])
-async def get_social_medias(db: Session = Depends(get_db)):
+async def get_social_medias(db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves a list of social media entries.
 
@@ -44,4 +39,4 @@ async def get_social_medias(db: Session = Depends(get_db)):
     Returns:
         list[SocialMedia]: List of social media links.
     """
-    return crud.get_social_medias(db)
+    return await crud.get_social_medias(db)

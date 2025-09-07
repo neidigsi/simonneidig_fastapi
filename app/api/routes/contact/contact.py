@@ -16,19 +16,14 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends, HTTPException, Request
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import ValidationError
 
 # Import internal dependencies
-from app.db.models import contact as models
 from app.db.queries.contact import save_contact
-from app.db.database import engine
 from app.schemas import contact as schemas
 from app.services.i18n import get_language
-from app.services.db import get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app.services.db import get_async_session
 
 
 # Create a new APIRouter instance for the contact API
@@ -43,7 +38,7 @@ router = APIRouter(
 async def post_contact(
     request: Request,  # Use Request to manually parse the body
     lang: str = Depends(get_language),
-    db: Session = Depends(get_db)
+    db: AsyncSession = Depends(get_async_session)
 ):
     """
     Receives and processes a contact request.
@@ -78,8 +73,9 @@ async def post_contact(
         raise HTTPException(status_code=400, detail="All fields (name, email, message) are required.")
 
     try:
-        # Save the contact to the database
-        return save_contact(contact, db, lang)
+        # Save the contact to the database (async helper)
+        saved = await save_contact(contact, db, lang)
+        return saved
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
