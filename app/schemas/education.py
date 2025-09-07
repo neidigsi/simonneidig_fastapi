@@ -28,7 +28,7 @@ class EducationBase(BaseModel):
     id: int
 
 
-class Education(EducationBase):
+class EducationRead(EducationBase):
     """
     Extended model for an education record with additional fields.
 
@@ -56,3 +56,21 @@ class Education(EducationBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+
+
+class EducationCreate(BaseModel):
+    """
+    Schema used to create a new Education record together with its
+    localized fields.
+
+    Note: The language is taken from the request dependency (`get_language`).
+    """
+    start_date: datetime.date | None = None
+    end_date: datetime.date | None = None
+    degree: str | None = None
+    grade: float | None = None
+    institution_id: int | None = None
+
+    # localized fields
+    course_of_study: str | None = None
+    description: str | None = None

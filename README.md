@@ -1,6 +1,6 @@
 # FastAPI Backend of Personal Website
 
-This repository contains the backend for the website [https://simon-neidig.eu](https://simon-neidig.eu), build with FastAPI, SQLAlchemy and Alembic.
+This repository contains the backend for the website [https://simon-neidig.eu](https://simon-neidig.eu), built with FastAPI, SQLAlchemy and Alembic.
 
 ## Goals
 
@@ -63,7 +63,7 @@ The codebase is organized for clarity and scalability. For a detailed overview o
 ### Multi Language Support
 
 As a freelancer with roots in Germany and based in France, supporting multiple markets is essential. The application currently supports German, English, and French.  
-For implementation details, see section "Multi Language Support in [./app/README.md](./app/README.md).
+For implementation details, see the section "Multi Language Support" in [./app/README.md](./app/README.md).
 
 ### Database Access
 
