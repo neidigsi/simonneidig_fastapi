@@ -1,9 +1,10 @@
 alembic==1.15.2
+asyncpg==0.30.0
 annotated-types==0.7.0
 anyio==4.9.0
 boolean.py==5.0
 CacheControl==0.14.3
-certifi==2025.4.26
+certifi==2025.8.3
 charset-normalizer==3.4.1
 click==8.1.8
 defusedxml==0.7.1
@@ -35,7 +36,7 @@ pip-requirements-parser==32.0.1
 psycopg2==2.9.10
 py-serializable==2.0.0
 pydantic==2.11.7
-pydantic_core==2.33.1
+pydantic_core==2.33.2
 Pygments==2.19.2
 pyparsing==3.2.3
 python-dotenv==1.1.1
