@@ -29,6 +29,9 @@ from app.services.user import auth_backend, current_active_user, fastapi_users
 # Initialize FastAPI app
 app = FastAPI()
 
+# Define route prefixes as constants
+AUTH_PREFIX = "/auth"
+
 # Add routes to FastAPI app
 app.include_router(contact.router)
 app.include_router(education.router)
@@ -41,21 +44,21 @@ app.include_router(personal_information.router)
 app.include_router(social_media.router)
 app.include_router(work.router)
 app.include_router(
-    fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]
+    fastapi_users.get_auth_router(auth_backend), prefix=f"{AUTH_PREFIX}/jwt", tags=["auth"]
 )
 app.include_router(
     fastapi_users.get_register_router(UserRead, UserCreate),
-    prefix="/auth",
+    prefix=AUTH_PREFIX,
     tags=["auth"],
 )
 app.include_router(
     fastapi_users.get_reset_password_router(),
-    prefix="/auth",
+    prefix=AUTH_PREFIX,
     tags=["auth"],
 )
 app.include_router(
     fastapi_users.get_verify_router(UserRead),
-    prefix="/auth",
+    prefix=AUTH_PREFIX,
     tags=["auth"],
 )
 app.include_router(

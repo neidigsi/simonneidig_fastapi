@@ -40,14 +40,32 @@ jobs:
         pip install -r requirements.txt
 
     - name: Generate Configuration
+      env:
+        PGPASSWORD: ${{ secrets.DB_TEST_PWD }}
       run: |
         sed -i~ '/^DB_PASSWORD=/s/=.*/="${{ secrets.DB_TEST_PWD }}"/' .env.example
+        sed -i~ 's/REPLACE_PASSWORD/${{ secrets.DB_TEST_PWD }}/' alembic.ini.example
+
         mv .env.example .env
+        mv alembic.ini.example alembic.ini
 
     - name: Start FastAPI App
       run: |
         nohup fastapi run app/main.py --port 8000 &
         sleep 10
+
+    - name: Initialize Database
+      env:
+        PGPASSWORD: ${{ secrets.DB_TEST_PWD }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client
+
+        # Apply database migrations
+        alembic upgrade head
+
+        # Execute SQL file to seed test users
+        PGPASSWORD=${PGPASSWORD} psql -h localhost -U postgres -d postgres -f ./scripts/create_test_users.sql
 
     - name: Install Postman CLI
       run: |
