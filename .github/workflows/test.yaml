@@ -48,8 +48,6 @@ jobs:
 
         mv .env.example .env
         mv alembic.ini.example alembic.ini
-        cat alembic.ini
-
 
     - name: Start FastAPI App
       run: |
