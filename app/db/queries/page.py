@@ -10,15 +10,15 @@ Functions here map translation fields onto Page model instances for API consumpt
 
 # Import external dependencies
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
 from app.db.models.page import Page
 from app.db.models.page_translation import PageTranslation
 
 
-def get_pages(lang: str, db: Session):
-    pages = db.execute(
+async def get_pages(lang: str, db: AsyncSession):
+    result = await db.execute(
         select(
             Page,
             PageTranslation.title,
@@ -27,20 +27,22 @@ def get_pages(lang: str, db: Session):
         )
         .join(PageTranslation)
         .where(PageTranslation.language.has(iso639_1=lang))
-    ).all()
+    )
+    
+    pages = result.all()
 
     # Map the additional fields to the Page object
-    result = []
+    mapped_results = []
     for page, title, abstract, html in pages:
         page.title = title
         page.abstract = abstract
         page.html = html
-        result.append(page)  # Append the full Page object
+        mapped_results.append(page)  # Append the full Page object
 
-    return result
+    return mapped_results
 
 
-def get_page(tech_key: str, lang: str, db: Session):
+async def get_page(tech_key: str, lang: str, db: AsyncSession):
     """
     Fetch a single Page object by its tech_key with its title, abstract, and HTML
     populated from the corresponding translation for the specified language.
@@ -53,7 +55,7 @@ def get_page(tech_key: str, lang: str, db: Session):
     Returns:
         Page | None: The Page object with translations, or None if not found.
     """
-    result = db.execute(
+    result = await db.execute(
         select(
             Page,
             PageTranslation.title,
@@ -63,10 +65,12 @@ def get_page(tech_key: str, lang: str, db: Session):
         .join(PageTranslation)
         .where(Page.tech_key == tech_key)
         .where(PageTranslation.language.has(iso639_1=lang))
-    ).first()
-
-    if result:
-        page, title, abstract, html = result
+    )
+    
+    mapped_result = result.first()
+    
+    if mapped_result:
+        page, title, abstract, html = mapped_result
         page.title = title
         page.abstract = abstract
         page.html = html

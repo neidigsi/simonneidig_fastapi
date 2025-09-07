@@ -13,18 +13,13 @@ Main features:
 
 # Import external dependencies
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import internal dependencies
-from app.db.models import experience as models
 from app.db.queries import experience as crud
-from app.db.database import engine
 from app.schemas import experience as schemas
 from app.services.i18n import get_language
-from app.services.db import get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app.services.db import get_async_session
 
 
 # Create a new APIRouter instance for the experience API
@@ -36,7 +31,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[schemas.Experience])
-async def get_experiences(lang: str = Depends(get_language), db: Session = Depends(get_db)):
+async def get_experiences(lang: str = Depends(get_language), db: AsyncSession = Depends(get_async_session)):
     """
     Retrieves a list of experience entries.
 
@@ -47,4 +42,4 @@ async def get_experiences(lang: str = Depends(get_language), db: Session = Depen
     Returns:
         list[Experience]: List of experience entries.
     """
-    return crud.get_experiences(lang, db)
+    return await crud.get_experiences(lang, db)
