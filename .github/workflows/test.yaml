@@ -44,6 +44,15 @@ jobs:
         sed -i~ '/^DB_PASSWORD=/s/=.*/="${{ secrets.DB_TEST_PWD }}"/' .env.example
         mv .env.example .env
 
+    - name: Seed Database Users
+      env:
+        PGPASSWORD: ${{ secrets.DB_TEST_PWD }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client
+        # Execute SQL file to seed test users
+        PGPASSWORD=${PGPASSWORD} psql -h localhost -U postgres -d postgres -f ./scripts/create_test_users.sql
+
     - name: Start FastAPI App
       run: |
         nohup fastapi run app/main.py --port 8000 &
