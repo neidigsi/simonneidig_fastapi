@@ -40,13 +40,15 @@ jobs:
         pip install -r requirements.txt
 
     - name: Generate Configuration
+      env:
+        PGPASSWORD: ${{ secrets.DB_TEST_PWD }}
       run: |
         sed -i~ '/^DB_PASSWORD=/s/=.*/="${{ secrets.DB_TEST_PWD }}"/' .env.example
         sed -i~ 's/REPLACE_PASSWORD/${{ secrets.DB_TEST_PWD }}/' alembic.ini.example
 
         mv .env.example .env
         mv alembic.ini.example alembic.ini
-        cat alembic.ini.example
+        cat alembic.ini
 
 
     - name: Start FastAPI App
