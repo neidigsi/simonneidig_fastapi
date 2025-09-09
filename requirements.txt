@@ -27,7 +27,7 @@ loguru==0.7.3
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
-msgpack==1.1.0
+msgpack==1.1.1
 orjson==3.10.16
 packageurl-python==0.16.0
 packaging==25.0
