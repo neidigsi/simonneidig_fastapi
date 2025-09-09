@@ -27,7 +27,7 @@ loguru==0.7.3
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
-msgpack==1.1.0
+msgpack==1.1.1
 orjson==3.10.16
 packageurl-python==0.16.0
 packaging==25.0
@@ -53,7 +53,7 @@ starlette==0.46.2
 toml==0.10.2
 typer==0.17.3
 typing_extensions==4.13.2
-ujson==5.10.0
+ujson==5.11.0
 urllib3==2.5.0
 uvicorn==0.34.2
 uvloop==0.21.0
