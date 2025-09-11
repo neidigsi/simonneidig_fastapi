@@ -51,7 +51,7 @@ sortedcontainers==2.4.0
 SQLAlchemy==2.0.43
 starlette==0.46.2
 toml==0.10.2
-typer==0.17.3
+typer==0.17.4
 typing_extensions==4.15.0
 ujson==5.11.0
 urllib3==2.5.0
