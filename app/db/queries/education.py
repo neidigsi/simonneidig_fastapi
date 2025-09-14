@@ -24,14 +24,14 @@ from app.db.models.language import Language
 
 async def get_education(education_id: int, lang: str, db: AsyncSession):
     """
-    Retrieve an Image by its ID.
+    Retrieve an Education by its ID.
 
     Args:
-        image_id (int): The ID of the image to retrieve.
+        education (int): The ID of the education to retrieve.
         db (AsyncSession): SQLAlchemy async database session.
 
     Returns:
-        Image | None: The Image instance if found, otherwise None.
+        Education | None: The Education instance if found, otherwise None.
     """
     result = await db.execute(
         select(

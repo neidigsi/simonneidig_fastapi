@@ -24,7 +24,7 @@ class SocialMediaBase(BaseModel):
     id: int
 
 
-class SocialMedia(SocialMediaBase):
+class SocialMediaRead(SocialMediaBase):
     """
     Extended model for a social media record with additional fields.
 
@@ -46,3 +46,21 @@ class SocialMedia(SocialMediaBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+        
+        
+        
+class SocialMediaCreate(BaseModel):
+    """
+    Extended model for a social media record with additional fields.
+
+    Attributes:
+        name (str | None): The name of the social media platform.
+        url (str | None): The URL of the social media platform.
+        color (str | None): The color associated with the platform (e.g., branding color).
+        path (str | None): The path or icon name for the platform.
+    """
+    name: str | None = None
+    url: str | None = None
+    color: str | None = None
+    path: str | None = None
+
