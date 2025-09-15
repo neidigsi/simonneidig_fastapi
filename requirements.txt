@@ -29,7 +29,7 @@ MarkupSafe==3.0.2
 mdurl==0.1.2
 msgpack==1.1.1
 orjson==3.11.3
-packageurl-python==0.16.0
+packageurl-python==0.17.5
 packaging==25.0
 pip-api==0.0.34
 pip-requirements-parser==32.0.1
