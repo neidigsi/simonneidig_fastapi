@@ -10,7 +10,7 @@ click==8.1.8
 defusedxml==0.7.1
 dnspython==2.7.0
 email_validator==2.2.0
-fastapi==0.116.1
+fastapi==0.116.2
 fastapi-cli==0.0.11
 fastapi-users==14.0.1
 fastapi-users-db-sqlalchemy==7.0.0
