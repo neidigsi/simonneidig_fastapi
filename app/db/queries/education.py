@@ -27,7 +27,7 @@ async def get_education(education_id: int, lang: str, db: AsyncSession):
     Retrieve an Education by its ID.
 
     Args:
-        education (int): The ID of the education to retrieve.
+        education_id (int): The ID of the education to retrieve.
         db (AsyncSession): SQLAlchemy async database session.
 
     Returns:
@@ -86,6 +86,19 @@ async def get_education(education_id: int, lang: str, db: AsyncSession):
 
 
 async def get_educations(lang: str, db: AsyncSession):
+    """
+    Retrieve education entries for the given language.
+
+    Args:
+        lang (str): Two-letter ISO639-1 language code (e.g. "en", "de", "fr").
+        db (AsyncSession): SQLAlchemy async database session.
+
+    Returns:
+        list[Education]: List of Education objects with translation fields and the associated 
+        university's name and address populated from translation tables.
+        Related objects are selected eagerly to avoid lazy I/O.
+    """
+    
     result = await db.execute(
         select(
             Education,
@@ -146,7 +159,14 @@ async def create_education(lang: str, db: AsyncSession, *,
     Returns the newly created Education instance (refreshed).
     """
     # Create the education row
-    edu = Education(start_date=start_date, end_date=end_date, degree=degree, grade=grade, institution_id=institution_id)
+    edu = Education(
+        start_date=start_date,
+        end_date=end_date,
+        degree=degree, 
+        grade=grade,
+        institution_id=institution_id
+    )
+    
     db.add(edu)
     await db.flush()  # assigns primary key
 

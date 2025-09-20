@@ -30,6 +30,7 @@ from app.services.user import fastapi_users
 get_current_superuser = fastapi_users.current_user(superuser=True)
 
 
+# Create a new APIRouter instance for the education API
 router = APIRouter(
     prefix="/education",
     tags=["education"],

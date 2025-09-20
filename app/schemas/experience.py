@@ -28,7 +28,7 @@ class ExperienceBase(BaseModel):
     id: int
 
 
-class Experience(ExperienceBase):
+class ExperienceRead(ExperienceBase):
     """
     Extended model for an experience record with additional fields.
 
@@ -58,3 +58,21 @@ class Experience(ExperienceBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+
+class ExperienceCreate(BaseModel):
+    """
+    Schema used to create a new Experience record together with its
+    localized fields.
+
+    Note: The language is taken from the request dependency (`get_language`).
+    """
+    url: str | None = None
+    start_date: datetime.date | None = None
+    end_date: datetime.date | None = None
+    institution_id: int | None = None
+    
+    # localized fields
+    title: str | None = None
+    extract: str | None = None
+    description: str | None = None
+    industry: str | None = None
