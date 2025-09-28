@@ -1141,6 +1141,838 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('de');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Attribute 'degree' as expect\", function () {",
+															"    pm.expect(body.degree).to.eql('M.Sc.');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Attribute 'grade' as expect\", function () {",
+															"    pm.expect(body.grade).to.eql(1.1);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Attribute 'start_date' as expect\", function () {",
+															"    pm.expect(body.start_date).to.eql('2024-01-01');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Attribute 'end_date' as expect\", function () {",
+															"    pm.expect(body.end_date).to.eql('2024-12-31');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Attribute 'course_of_study' as expect\", function () {",
+															"    pm.expect(body.course_of_study).to.eql('Teststudies');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is a test description');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.1,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('en');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Attribute 'degree' as expect\", function () {",
+															"    pm.expect(body.degree).to.eql('M.Sc.');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Attribute 'grade' as expect\", function () {",
+															"    pm.expect(body.grade).to.eql(1.1);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Attribute 'start_date' as expect\", function () {",
+															"    pm.expect(body.start_date).to.eql('2024-01-01');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Attribute 'end_date' as expect\", function () {",
+															"    pm.expect(body.end_date).to.eql('2024-12-31');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Attribute 'course_of_study' as expect\", function () {",
+															"    pm.expect(body.course_of_study).to.eql('Teststudies');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is a test description');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.1,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / EN / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('fr');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Attribute 'degree' as expect\", function () {",
+															"    pm.expect(body.degree).to.eql('M.Sc.');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Attribute 'grade' as expect\", function () {",
+															"    pm.expect(body.grade).to.eql(1.1);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Attribute 'start_date' as expect\", function () {",
+															"    pm.expect(body.start_date).to.eql('2024-01-01');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Attribute 'end_date' as expect\", function () {",
+															"    pm.expect(body.end_date).to.eql('2024-12-31');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Attribute 'course_of_study' as expect\", function () {",
+															"    pm.expect(body.course_of_study).to.eql('Teststudies');",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is a test description');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.1,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Education / Single / POST / FR / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"degree\": \"M.Sc.\",\n    \"grade\": 1.0,\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\",\n    \"course_of_study\": \"Teststudies\",\n    \"description\": \"This is a test description\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{education-endpoint}}/",
+													"host": [
+														"{{education-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
 				}
 			]
 		},
@@ -1273,7 +2105,7 @@
 												"header": [
 													{
 														"key": "Accept-Language",
-														"value": "fr",
+														"value": "fr-FR",
 														"type": "text"
 													}
 												],
@@ -1281,6 +2113,850 @@
 													"raw": "{{experience-endpoint}}",
 													"host": [
 														"{{experience-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('de');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('My Experience');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Attribute 'extract' as expect\", function () {",
+															"    pm.expect(body.extract).to.eql('This is the extract');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is the description');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Attribute 'url' as expect\", function () {",
+															"    pm.expect(body.url).to.eql('https://test-experience.test');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Attribute 'industry' as expect\", function () {",
+															"    pm.expect(body.industry).to.eql('My Industry');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Attribute 'start_date' as expect\", function () {",
+															"    pm.expect(body.start_date).to.eql('2024-01-01');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Successful request - Attribute 'end_date' as expect\", function () {",
+															"    pm.expect(body.end_date).to.eql('2024-12-31');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Status coEN is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - ID is ENfined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('en');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('My Experience');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Attribute 'extract' as expect\", function () {",
+															"    pm.expect(body.extract).to.eql('This is the extract');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is the description');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Attribute 'url' as expect\", function () {",
+															"    pm.expect(body.url).to.eql('https://test-experience.test');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Attribute 'industry' as expect\", function () {",
+															"    pm.expect(body.industry).to.eql('My Industry');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Attribute 'start_date' as expect\", function () {",
+															"    pm.expect(body.start_date).to.eql('2024-01-01');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Successful request - Attribute 'end_date' as expect\", function () {",
+															"    pm.expect(body.end_date).to.eql('2024-12-31');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / EN / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('fr');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('My Experience');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Attribute 'extract' as expect\", function () {",
+															"    pm.expect(body.extract).to.eql('This is the extract');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is the description');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Attribute 'url' as expect\", function () {",
+															"    pm.expect(body.url).to.eql('https://test-experience.test');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Attribute 'industry' as expect\", function () {",
+															"    pm.expect(body.industry).to.eql('My Industry');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Attribute 'start_date' as expect\", function () {",
+															"    pm.expect(body.start_date).to.eql('2024-01-01');",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Successful request - Attribute 'end_date' as expect\", function () {",
+															"    pm.expect(body.end_date).to.eql('2024-12-31');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Experience / Single / POST / FR / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{experience-endpoint}}/",
+													"host": [
+														"{{experience-endpoint}}"
+													],
+													"path": [
+														""
 													]
 												}
 											},
@@ -1431,6 +3107,814 @@
 													"raw": "{{expertise-endpoint}}",
 													"host": [
 														"{{expertise-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('de');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('My Expertise');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is the description');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Successful request - Attribute 'icon' as expect\", function () {",
+															"    pm.expect(body.icon).to.eql('ChartBarIcon');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Successful request - Attribute 'sort' as expect\", function () {",
+															"    pm.expect(body.sort).to.eql(17);",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('en');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('My Expertise');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is the description');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Successful request - Attribute 'icon' as expect\", function () {",
+															"    pm.expect(body.icon).to.eql('ChartBarIcon');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Successful request - Attribute 'sort' as expect\", function () {",
+															"    pm.expect(body.sort).to.eql(17);",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('fr');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('My Expertise');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Successful request - Attribute 'description' as expect\", function () {",
+															"    pm.expect(body.description).to.eql('This is the description');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Successful request - Attribute 'icon' as expect\", function () {",
+															"    pm.expect(body.icon).to.eql('ChartBarIcon');",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Successful request - Attribute 'sort' as expect\", function () {",
+															"    pm.expect(body.sort).to.eql(17);",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
 													]
 												}
 											},
@@ -2205,10 +4689,6 @@
 							]
 						}
 					]
-				},
-				{
-					"name": "Single",
-					"item": []
 				}
 			]
 		},
@@ -2359,6 +4839,814 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('de');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Successful request - Attribute 'name' as expect\", function () {",
+															"    pm.expect(body.name).to.eql('Test Social Media');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Successful request - Attribute 'url' as expect\", function () {",
+															"    pm.expect(body.url).to.eql(\"https://test-social-media.com\");",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Successful request - Attribute 'color' as expect\", function () {",
+															"    pm.expect(body.color).to.eql(\"#FFF\");",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Successful request - Attribute 'path' as expect\", function () {",
+															"    pm.expect(body.path).to.eql('M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('en');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Successful request - Attribute 'name' as expect\", function () {",
+															"    pm.expect(body.name).to.eql('Test Social Media');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Successful request - Attribute 'url' as expect\", function () {",
+															"    pm.expect(body.url).to.eql(\"https://test-social-media.com\");",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Successful request - Attribute 'color' as expect\", function () {",
+															"    pm.expect(body.color).to.eql(\"#FFF\");",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Successful request - Attribute 'path' as expect\", function () {",
+															"    pm.expect(body.path).to.eql('M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / EN / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('fr');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Successful request - Attribute 'name' as expect\", function () {",
+															"    pm.expect(body.name).to.eql('Test Social Media');",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Successful request - Attribute 'url' as expect\", function () {",
+															"    pm.expect(body.url).to.eql(\"https://test-social-media.com\");",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Successful request - Attribute 'color' as expect\", function () {",
+															"    pm.expect(body.color).to.eql(\"#FFF\");",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Successful request - Attribute 'path' as expect\", function () {",
+															"    pm.expect(body.path).to.eql('M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Social Media / Single / POST / FR / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Test Social Media\",\n    \"url\": \"https://test-social-media.com\",\n    \"color\": \"#FFF\",\n    \"path\": \"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{social-media-endpoint}}/",
+													"host": [
+														"{{social-media-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
 				}
 			]
 		},
@@ -2417,12 +5705,12 @@
 										"exec": [
 											"var body = pm.response.json()",
 											"",
-											"pm.test(\"Page / Single / GET / Not found - Status code is 404\", function () {",
+											"pm.test(\"Image / Single / GET / Not found - Status code is 404\", function () {",
 											"    pm.response.to.have.status(404);",
 											"});",
 											"",
-											"pm.test(\"Page / Single / GET / Not found - Error message as expected\", function () {",
-											"    pm.expect(body.detail).to.eql('Page not found');",
+											"pm.test(\"Image / Single / GET / Not found - Error message as expected\", function () {",
+											"    pm.expect(body.detail).to.eql('Image not found');",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2440,12 +5728,12 @@
 									}
 								],
 								"url": {
-									"raw": "{{image-endpoint}}/asdf",
+									"raw": "{{image-endpoint}}/123321",
 									"host": [
 										"{{image-endpoint}}"
 									],
 									"path": [
-										"asdf"
+										"123321"
 									]
 								}
 							},
@@ -2454,8 +5742,184 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"item": [
+						{
+							"name": "Successful request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var body = pm.response.json()",
+											"",
+											"pm.test(\"Auth / Register / Successful request - Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Auth / Register / Successful request - ID returned\", function () {",
+											"    pm.expect(body).to.have.property('id');",
+											"});",
+											"",
+											"pm.test(\"Auth / Register / Successful request - E-mail returned\", function () {",
+											"    pm.expect(body).to.have.property('email');",
+											"});",
+											"",
+											"pm.test(\"Auth / Register / Successful request - 'is_active' properly set\", function () {",
+											"    pm.expect(body.is_active).to.eql(true);",
+											"});",
+											"",
+											"pm.test(\"Auth / Register / Successful request - 'is_superuser' returned\", function () {",
+											"    pm.expect(body.is_superuser).to.eql(false);",
+											"});",
+											"",
+											"pm.test(\"Auth / Register / Successful request - 'is_verified' returned\", function () {",
+											"    pm.expect(body.is_verified).to.eql(false);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "de",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{auth-endpoint}}/register",
+									"host": [
+										"{{auth-endpoint}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "JWT",
+					"item": [
+						{
+							"name": "Login",
+							"item": [
+								{
+									"name": "Successful request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json()",
+													"",
+													"pm.test(\"Auth / JWT / Login / Successful request - Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Auth / JWT / Login / Successful request - Response contains token\", function () {",
+													"    pm.expect(body).to.have.property('access_token');",
+													"});",
+													"",
+													"pm.test(\"Auth / JWT / Login / Successful request - Token is of type 'bearer'\", function () {",
+													"    pm.expect(body.token_type).to.equal('bearer');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept-Language",
+												"value": "de",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "username",
+													"value": "{{user}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{password}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{login-endpoint}}",
+											"host": [
+												"{{login-endpoint}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Me",
+					"item": []
+				}
+			]
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -2463,7 +5927,44 @@
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"pm.collectionVariables.set(\"collection-base-url\", pm.environment.get(\"base-url\"));"
+					"// Copy ",
+					"pm.collectionVariables.set(\"collection-base-url\", pm.environment.get(\"base-url\"));",
+					"",
+					"// Login and request access token | Admin",
+					"pm.sendRequest({",
+					"    url: pm.collectionVariables.replaceIn('{{login-endpoint}}'),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'Content-Type': 'application/x-www-form-urlencoded'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            { key: 'username', value: pm.environment.get('user'), disabled: false },",
+					"            { key: 'password', value: pm.environment.get('password'), disabled: false }",
+					"        ]",
+					"    }",
+					"}, (err, res) => {",
+					"    pm.collectionVariables.set(\"token\", res.json().access_token);",
+					"});",
+					"",
+					"// Login and request access token | Non-Admin",
+					"pm.sendRequest({",
+					"    url: pm.collectionVariables.replaceIn('{{login-endpoint}}'),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'Content-Type': 'application/x-www-form-urlencoded'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            { key: 'username', value: pm.environment.get('user-non-admin'), disabled: false },",
+					"            { key: 'password', value: pm.environment.get('password-non-admin'), disabled: false }",
+					"        ]",
+					"    }",
+					"}, (err, res) => {",
+					"    pm.collectionVariables.set(\"token-non-admin\", res.json().access_token);",
+					"});"
 				]
 			}
 		},
@@ -2473,7 +5974,14 @@
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					""
+					"// Logout",
+					"pm.sendRequest({",
+					"    url: pm.collectionVariables.replaceIn('{{logout-endpoint}}'),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'Authorization': pm.collectionVariables.replaceIn('Bearer {{token}}')",
+					"    }",
+					"}, (err, res) => {});"
 				]
 			}
 		}
@@ -2481,58 +5989,96 @@
 	"variable": [
 		{
 			"key": "collection-base-url",
+			"value": ""
+		},
+		{
+			"key": "token",
 			"value": "",
-			"type": "string"
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "token-non-admin",
+			"value": "",
+			"type": "string",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "auth-endpoint",
+			"value": "{{collection-base-url}}/auth",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "jwt-endpoint",
+			"value": "{{auth-endpoint}}/jwt",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "login-endpoint",
+			"value": "{{jwt-endpoint}}/login",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "logout-endpoint",
+			"value": "{{jwt-endpoint}}/logout",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
 		},
 		{
 			"key": "contact-endpoint",
-			"value": "{{collection-base-url}}/contact",
-			"type": "string"
+			"value": "{{collection-base-url}}/contact"
 		},
 		{
 			"key": "education-endpoint",
-			"value": "{{collection-base-url}}/education",
-			"type": "string"
+			"value": "{{collection-base-url}}/education"
 		},
 		{
 			"key": "experience-endpoint",
-			"value": "{{collection-base-url}}/experience",
-			"type": "string"
+			"value": "{{collection-base-url}}/experience"
 		},
 		{
 			"key": "expertise-endpoint",
-			"value": "{{collection-base-url}}/expertise",
-			"type": "string"
+			"value": "{{collection-base-url}}/expertise"
 		},
 		{
 			"key": "image-endpoint",
-			"value": "{{collection-base-url}}/image",
-			"type": "string"
+			"value": "{{collection-base-url}}/image"
 		},
 		{
 			"key": "page-endpoint",
-			"value": "{{collection-base-url}}/page",
-			"type": "string"
+			"value": "{{collection-base-url}}/page"
 		},
 		{
 			"key": "personal-details-endpoint",
-			"value": "{{collection-base-url}}/personal-details",
-			"type": "string"
+			"value": "{{collection-base-url}}/personal-details"
 		},
 		{
 			"key": "personal-information-endpoint",
-			"value": "{{collection-base-url}}/personal-information",
-			"type": "string"
+			"value": "{{collection-base-url}}/personal-information"
 		},
 		{
 			"key": "social-media-endpoint",
-			"value": "{{collection-base-url}}/social-media",
-			"type": "string"
+			"value": "{{collection-base-url}}/social-media"
 		},
 		{
 			"key": "work-endpoint",
-			"value": "{{collection-base-url}}/work",
-			"type": "string"
+			"value": "{{collection-base-url}}/work"
 		}
 	]
 }

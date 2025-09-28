@@ -18,7 +18,7 @@ class ExpertiseBase(BaseModel):
     """
     id: int
 
-class Expertise(ExpertiseBase):
+class ExpertiseRead(ExpertiseBase):
     """
     Full model for an expertise record.
 
@@ -39,3 +39,15 @@ class Expertise(ExpertiseBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+
+class ExpertiseCreate(BaseModel):
+    """
+    Schema used to create a new Expertise record together with its
+    localized fields.
+
+    Note: The language is taken from the request dependency (`get_language`).
+    """
+    title: str | None = None
+    description: str | None = None 
+    icon: str | None = None
+    sort: int | None = None

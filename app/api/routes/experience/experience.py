@@ -49,6 +49,7 @@ async def get_experiences(lang: str = Depends(get_language), db: AsyncSession = 
     """
     return await crud.get_experiences(lang, db)
 
+
 @router.post("/", response_model=schemas.ExperienceRead, status_code=status.HTTP_201_CREATED)
 async def create_experience(
     payload: schemas.ExperienceCreate,
