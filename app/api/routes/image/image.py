@@ -1,7 +1,7 @@
 """
 Image API Route for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides the endpoint for retrieving images via GET from `/image/{image_id}`.
 An "Image" represents an image file stored and referenced by the website.

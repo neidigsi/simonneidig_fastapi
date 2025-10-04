@@ -1,7 +1,7 @@
 """
 Contact queries for the database
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module contains database query helpers related to contact inquiries submitted via the website.
 A "Contact" represents a message submitted through the site's contact form; these helpers

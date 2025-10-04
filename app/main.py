@@ -1,7 +1,7 @@
 """
 FastAPI application entrypoint
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module creates and configures the FastAPI application instance and includes
 all API routers used by the backend. Importing this module prepares the app for

@@ -1,7 +1,7 @@
 """
 Image DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines the Image model representing image files stored for use across the site.
 Images are referenced by other objects (works, profile, etc.) via their ID.

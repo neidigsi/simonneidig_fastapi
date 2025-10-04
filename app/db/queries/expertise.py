@@ -1,7 +1,7 @@
 """
 Expertise query helpers
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides helper functions to load Expertise entries together with
 their localized title and description for a requested language. Results are

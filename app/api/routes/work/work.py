@@ -1,7 +1,7 @@
 """
 Work API Route for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides the endpoint for retrieving "Work" entries via GET from `/work/`.
 A "Work" represents a portfolio item or project shown on the website.

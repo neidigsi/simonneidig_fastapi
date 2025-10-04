@@ -1,5 +1,5 @@
 """
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 Description:
 This file defines the Pydantic models used for handling expertise-related data in the FastAPI application.
@@ -9,6 +9,7 @@ The models are used to validate and serialize data between the API and the datab
 # Import external dependencies
 from pydantic import BaseModel
 
+
 class ExpertiseBase(BaseModel):
     """
     Base model for an expertise record.
@@ -17,6 +18,7 @@ class ExpertiseBase(BaseModel):
         id (int): The unique identifier for the expertise record.
     """
     id: int
+
 
 class ExpertiseRead(ExpertiseBase):
     """
@@ -39,6 +41,7 @@ class ExpertiseRead(ExpertiseBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+
 
 class ExpertiseCreate(BaseModel):
     """

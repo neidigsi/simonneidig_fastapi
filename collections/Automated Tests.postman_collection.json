@@ -4539,6 +4539,817 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('de');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Successful request - Attribute 'label' as expect\", function () {",
+															"    pm.expect(body.label).to.eql('My Info');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Successful request - Attribute 'value' as expect\", function () {",
+															"    pm.expect(body.value).to.eql('This is the value');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Successful request - Attribute 'icon' as expect\", function () {",
+															"    pm.expect(body.icon).to.eql('123456');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('en');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Successful request - Attribute 'label' as expect\", function () {",
+															"    pm.expect(body.label).to.eql('My Info');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Successful request - Attribute 'value' as expect\", function () {",
+															"    pm.expect(body.value).to.eql('This is the value');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Successful request - Attribute 'icon' as expect\", function () {",
+															"    pm.expect(body.icon).to.eql('123456');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / EN / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('fr');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Successful request - Attribute 'label' as expect\", function () {",
+															"    pm.expect(body.label).to.eql('My Info');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Successful request - Attribute 'value' as expect\", function () {",
+															"    pm.expect(body.value).to.eql('This is the value');",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Successful request - Attribute 'icon' as expect\", function () {",
+															"    pm.expect(body.icon).to.eql('123456');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Expertise\",\n    \"description\": \"This is the description\",\n    \"icon\": \"ChartBarIcon\",\n    \"sort\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Expertise / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"label\": \"My Info\",\n    \"value\": \"This is the value\",\n    \"icon\": \"123456\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{expertise-endpoint}}/",
+													"host": [
+														"{{expertise-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Personal Information / Single / POST / FR / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"title\": \"My Experience\",\n    \"description\": \"This is the description\",\n    \"extract\": \"This is the extract\",\n    \"industry\": \"My Industry\",\n    \"url\": \"https://test-experience.test\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-12-31\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{personal-information-endpoint}}/",
+													"host": [
+														"{{personal-information-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
 				}
 			]
 		},

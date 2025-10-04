@@ -1,7 +1,7 @@
 """
 PageTranslation DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines localized content entries for Page objects (title, abstract, html).
 """

@@ -1,7 +1,7 @@
 """
 PersonalInformationTranslation DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines localized label/value entries for PersonalInformation items.
 """

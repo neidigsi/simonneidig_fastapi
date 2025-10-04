@@ -1,7 +1,7 @@
 """
 Application configuration loader
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 Loads environment variables (from .env when present) and exposes configuration
 values used across the application (e.g. DB connection string).

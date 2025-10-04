@@ -1,7 +1,7 @@
 """
 Social media query helpers
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 Simple query helpers to retrieve social media link records used on the site.
 These helpers return SocialMedia model instances for API consumption.

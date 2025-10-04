@@ -1,7 +1,7 @@
 """
 Language DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines the Language model which represents supported languages
 for localized content via an ISO639-1 code.

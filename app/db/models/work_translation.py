@@ -1,7 +1,7 @@
 """
 WorkTranslation DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 Defines localized titles for Work (portfolio) entries. Each translation associates
 a Work with a Language and contains the localized title.

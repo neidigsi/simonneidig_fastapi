@@ -1,7 +1,7 @@
 """
 Experience DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines professional/educational experiences which reference an Institution.
 """

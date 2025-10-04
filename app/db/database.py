@@ -1,7 +1,7 @@
 """
 Database configuration and session factory
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module configures the SQLAlchemy engine, session factory and declarative base
 used throughout the application.

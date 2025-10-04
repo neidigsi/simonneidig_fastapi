@@ -1,7 +1,7 @@
 """
 Work query helpers
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides helper functions to load Work (portfolio) entries together with
 their localized title and associated categories for a requested language. The helper
