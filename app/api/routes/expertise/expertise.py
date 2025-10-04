@@ -1,7 +1,7 @@
 """
 Expertise API Route for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides the endpoint for retrieving expertise entries via GET from `/expertise/`.
 An "Expertise" represents a skill or area of knowledge displayed on the website.

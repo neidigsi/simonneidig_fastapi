@@ -1,7 +1,7 @@
 """
 Work DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines the Work model which represents a portfolio item or project shown on the website.
 A Work can have translations, a thumbnail image, and belong to multiple categories.

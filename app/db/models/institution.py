@@ -1,7 +1,7 @@
 """
 Institution DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines institutions (universities, companies) referenced by experiences and educations.
 """

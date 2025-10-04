@@ -1,7 +1,7 @@
 """
 Experience query helpers (async)
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides helpers to load Experience entries together with their
 localized title, extract, description, industry and associated company name

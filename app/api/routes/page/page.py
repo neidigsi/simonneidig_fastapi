@@ -1,7 +1,7 @@
 """
 Page API Route for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides endpoints for retrieving pages via GET from `/page/`.
 A "Page" represents a content page displayed on the website. Pages are designed to be extendable views and can be used generically.

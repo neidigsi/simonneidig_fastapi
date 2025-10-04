@@ -1,5 +1,5 @@
 """
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 Description:
 This module defines the Pydantic schemas for the "Category" entity used in the application.

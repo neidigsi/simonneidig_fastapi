@@ -1,7 +1,7 @@
 """
 Page query helpers
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides helper functions to load Page objects together with their
 localized translation fields (title, abstract, html) for a requested language.

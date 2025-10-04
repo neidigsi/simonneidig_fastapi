@@ -1,5 +1,5 @@
 """
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 Description:
 This module defines Pydantic models for representing personal information data.
@@ -24,7 +24,7 @@ class PersonalInformationsBase(BaseModel):
     id: int
 
 
-class PersonalInformation(PersonalInformationsBase):
+class PersonalInformationRead(PersonalInformationsBase):
     """
     Extended model for personal information with additional fields.
 
@@ -44,3 +44,15 @@ class PersonalInformation(PersonalInformationsBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+
+
+class PersonalInformationCreate(BaseModel):
+    """
+    Schema used to create a new personal information record together with its
+    localized fields.
+
+    Note: The language is taken from the request dependency (`get_language`).
+    """
+    label: str | None = None
+    value: str | None = None 
+    icon: str | None = None

@@ -1,7 +1,7 @@
 """
 Contact DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines the Contact SQLAlchemy model which represents contact inquiries
 submitted via the website's contact form. Contact records store sender information,

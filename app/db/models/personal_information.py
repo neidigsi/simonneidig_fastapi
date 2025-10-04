@@ -1,7 +1,7 @@
 """
 PersonalInformation DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines short personal information items (e.g., location, email) that are intended
 to be represented as key/value pairs and displayed on the website (e.g., sidebar/contact area).

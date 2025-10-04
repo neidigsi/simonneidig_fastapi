@@ -1,7 +1,7 @@
 """
 Category DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines categories used to classify works or projects.
 """

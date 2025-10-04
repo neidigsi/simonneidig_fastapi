@@ -1,7 +1,7 @@
 """
 Education query helpers
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides helper functions to load Education objects together with their
 localized translation fields (course_of_study, description) and the localized

@@ -1,5 +1,5 @@
 """
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 Description:
 This module defines Pydantic models for representing experience data.
@@ -58,6 +58,7 @@ class ExperienceRead(ExperienceBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+
 
 class ExperienceCreate(BaseModel):
     """

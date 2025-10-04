@@ -1,7 +1,7 @@
 """
 Social Media DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines the SocialMedia SQLAlchemy model used to store links to social profiles
 displayed on the website (e.g., LinkedIn, GitHub, Instagram). Each record contains a display

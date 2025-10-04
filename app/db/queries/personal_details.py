@@ -1,7 +1,7 @@
 """
 Personal details query helpers
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module provides a helper to load the primary PersonalDetails record together
 with its localized fields (position, abstract) for a requested language.

@@ -1,7 +1,7 @@
 """
 Page DB model for FastAPI
 
-Author: Simon Neidig <mail@simonneidig.de>
+Author: Simon Neidig <mail@simon-neidig.eu>
 
 This module defines the Page model representing generic, extendable content pages.
 Pages are designed to be used as generic views with localized content.
