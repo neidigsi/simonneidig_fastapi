@@ -15,6 +15,44 @@ from sqlalchemy.ext.asyncio import AsyncSession
 # Import internal dependencies
 from app.db.models.page import Page
 from app.db.models.page_translation import PageTranslation
+from app.db.models.language import Language
+
+
+async def get_page(tech_key: str, lang: str, db: AsyncSession):
+    """
+    Fetch a single Page object by its tech_key with its title, abstract, and HTML
+    populated from the corresponding translation for the specified language.
+
+    Args:
+        tech_key (str): The technical key of the page.
+        lang (str): The language code (e.g., "en", "de").
+        db (Session): The database session.
+
+    Returns:
+        Page | None: The Page object with translations, or None if not found.
+    """
+    result = await db.execute(
+        select(
+            Page,
+            PageTranslation.title,
+            PageTranslation.abstract,
+            PageTranslation.html
+        )
+        .outerjoin(PageTranslation)
+        .where(PageTranslation.language.has(iso639_1=lang))
+        .where(Page.tech_key == tech_key)
+    )
+    
+    mapped_result = result.first()
+    
+    if mapped_result:
+        page, title, abstract, html = mapped_result
+        page.title = title
+        page.abstract = abstract
+        page.html = html
+        return page
+
+    return None
 
 
 async def get_pages(lang: str, db: AsyncSession):
@@ -42,38 +80,46 @@ async def get_pages(lang: str, db: AsyncSession):
     return mapped_results
 
 
-async def get_page(tech_key: str, lang: str, db: AsyncSession):
+async def create_page(lang: str, db: AsyncSession, *, tech_key=None, title=None, abstract=None, html=None, creation_date=None):
     """
-    Fetch a single Page object by its tech_key with its title, abstract, and HTML
-    populated from the corresponding translation for the specified language.
+    Create a new Page and its localized translation for the given language.
 
-    Args:
-        tech_key (str): The technical key of the page.
-        lang (str): The language code (e.g., "en", "de").
-        db (Session): The database session.
-
-    Returns:
-        Page | None: The Page object with translations, or None if not found.
+    Returns the newly created Page instance (refreshed).
     """
-    result = await db.execute(
-        select(
-            Page,
-            PageTranslation.title,
-            PageTranslation.abstract,
-            PageTranslation.html
-        )
-        .join(PageTranslation)
-        .where(Page.tech_key == tech_key)
-        .where(PageTranslation.language.has(iso639_1=lang))
+    # Create the page row
+    p = Page(
+        tech_key=tech_key, 
+        creation_date=creation_date
     )
     
-    mapped_result = result.first()
-    
-    if mapped_result:
-        page, title, abstract, html = mapped_result
-        page.title = title
-        page.abstract = abstract
-        page.html = html
-        return page
+    db.add(p)
+    await db.flush()  # assigns primary key
 
-    return None
+    # Find language id
+    result = await db.execute(
+        select(Language).where(Language.iso639_1 == lang)
+    )
+    language_row = result.scalars().first()
+
+    if language_row is None:
+        # Create a language fallback if not present
+        language_row = Language(name=lang, iso639_1=lang)
+        db.add(language_row)
+        await db.flush()
+
+    # Create translation
+    translation = PageTranslation(
+        title=title,
+        abstract=abstract,
+        html=html,
+        page_id=p.id,
+        language_id=language_row.id,
+    )
+    db.add(translation)
+
+    # Commit both rows
+    await db.commit()
+    await db.refresh(p)
+    
+    # Return the full expertise with translations and related objects
+    return await get_page(p.tech_key, lang, db)
