@@ -33,7 +33,7 @@ class PageBase(BaseModel):
     id: int
 
 
-class Page(PageBase):
+class PageRead(PageBase):
     """
     Extended model for a page with additional fields.
 
@@ -57,3 +57,16 @@ class Page(PageBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+
+
+class PageCreate(BaseModel):
+    """
+    Schema used to create a new Page record together with its
+    localized fields.
+
+    Note: The language is taken from the request dependency (`get_language`).
+    """
+    tech_key: str | None = None
+    title: str | None = None 
+    abstract: str | None = None
+    html: str | None = None
