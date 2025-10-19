@@ -4247,6 +4247,839 @@
 									"response": []
 								}
 							]
+						},
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('de');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - Attribute 'tech_key' as expect\", function () {",
+															"    pm.expect(body.tech_key).to.eql(pm.collectionVariables.get(\"page-tech-key\"));",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('The page title');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - Attribute 'abstract' as expect\", function () {",
+															"    pm.expect(body.abstract).to.eql('This is a short form of the page');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - Attribute 'html' as expect\", function () {",
+															"    pm.expect(body.html).to.eql('<div>HTML is cool</div>');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Successful request - Attribute 'creation_date' as expect\", function () {",
+															"    const today = new Date().toISOString().split('T')[0];",
+															"    pm.expect(body.creation_date).to.eql(today);",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('en');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - Attribute 'tech_key' as expect\", function () {",
+															"    pm.expect(body.tech_key).to.eql(pm.collectionVariables.get(\"page-tech-key\"));",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('The page title');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - Attribute 'abstract' as expect\", function () {",
+															"    pm.expect(body.abstract).to.eql('This is a short form of the page');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - Attribute 'html' as expect\", function () {",
+															"    pm.expect(body.html).to.eql('<div>HTML is cool</div>');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Successful request - Attribute 'creation_date' as expect\", function () {",
+															"    const today = new Date().toISOString().split('T')[0];",
+															"    pm.expect(body.creation_date).to.eql(today);",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / EN / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('fr');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - Attribute 'tech_key' as expect\", function () {",
+															"    pm.expect(body.tech_key).to.eql(pm.collectionVariables.get(\"page-tech-key\"));",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - Attribute 'title' as expect\", function () {",
+															"    pm.expect(body.title).to.eql('The page title');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - Attribute 'abstract' as expect\", function () {",
+															"    pm.expect(body.abstract).to.eql('This is a short form of the page');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - Attribute 'html' as expect\", function () {",
+															"    pm.expect(body.html).to.eql('<div>HTML is cool</div>');",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Successful request - Attribute 'creation_date' as expect\", function () {",
+															"    const today = new Date().toISOString().split('T')[0];",
+															"    pm.expect(body.creation_date).to.eql(today);",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Page / Single / POST / FR / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"tech_key\": \"{{page-tech-key}}\",\n    \"title\": \"The page title\",\n    \"abstract\": \"This is a short form of the page\",\n    \"html\": \"<div>HTML is cool</div>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{page-endpoint}}/",
+													"host": [
+														"{{page-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
 						}
 					]
 				}
@@ -4701,11 +5534,11 @@
 														"exec": [
 															"var body = pm.response.json()",
 															"",
-															"pm.test(\"Expertise / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"pm.test(\"Personal Information / Single / POST / DE / No authorization - Status code is 401\", function () {",
 															"    pm.response.to.have.status(401);",
 															"});",
 															"",
-															"pm.test(\"Expertise / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"pm.test(\"Personal Information / Single / POST / DE / No authorization - Message as expected\", function () {",
 															"    pm.expect(body.detail).to.eql('Unauthorized');",
 															"});"
 														],
@@ -4968,11 +5801,11 @@
 														"exec": [
 															"var body = pm.response.json()",
 															"",
-															"pm.test(\"Expertise / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"pm.test(\"Personal Information / Single / POST / EN / No authorization - Status code is 401\", function () {",
 															"    pm.response.to.have.status(401);",
 															"});",
 															"",
-															"pm.test(\"Expertise / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"pm.test(\"Personal Information / Single / POST / EN / No authorization - Message as expected\", function () {",
 															"    pm.expect(body.detail).to.eql('Unauthorized');",
 															"});"
 														],
@@ -5235,11 +6068,11 @@
 														"exec": [
 															"var body = pm.response.json()",
 															"",
-															"pm.test(\"Expertise / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"pm.test(\"Personal Information / Single / POST / FR / No authorization - Status code is 401\", function () {",
 															"    pm.response.to.have.status(401);",
 															"});",
 															"",
-															"pm.test(\"Expertise / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"pm.test(\"Personal Information / Single / POST / FR / No authorization - Message as expected\", function () {",
 															"    pm.expect(body.detail).to.eql('Unauthorized');",
 															"});"
 														],
@@ -6737,9 +7570,11 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					"// Copy ",
 					"pm.collectionVariables.set(\"collection-base-url\", pm.environment.get(\"base-url\"));",
+					"pm.collectionVariables.set(\"page-tech-key\", pm.variables.replaceIn(\"{{$randomFileName}}\"));",
 					"",
 					"// Login and request access token | Admin",
 					"pm.sendRequest({",
@@ -6784,6 +7619,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					"// Logout",
 					"pm.sendRequest({",
@@ -6804,52 +7640,27 @@
 		},
 		{
 			"key": "token",
-			"value": "",
-			"description": {
-				"content": "",
-				"type": "text/plain"
-			}
+			"value": ""
 		},
 		{
 			"key": "token-non-admin",
-			"value": "",
-			"type": "string",
-			"description": {
-				"content": "",
-				"type": "text/plain"
-			}
+			"value": ""
 		},
 		{
 			"key": "auth-endpoint",
-			"value": "{{collection-base-url}}/auth",
-			"description": {
-				"content": "",
-				"type": "text/plain"
-			}
+			"value": "{{collection-base-url}}/auth"
 		},
 		{
 			"key": "jwt-endpoint",
-			"value": "{{auth-endpoint}}/jwt",
-			"description": {
-				"content": "",
-				"type": "text/plain"
-			}
+			"value": "{{auth-endpoint}}/jwt"
 		},
 		{
 			"key": "login-endpoint",
-			"value": "{{jwt-endpoint}}/login",
-			"description": {
-				"content": "",
-				"type": "text/plain"
-			}
+			"value": "{{jwt-endpoint}}/login"
 		},
 		{
 			"key": "logout-endpoint",
-			"value": "{{jwt-endpoint}}/logout",
-			"description": {
-				"content": "",
-				"type": "text/plain"
-			}
+			"value": "{{jwt-endpoint}}/logout"
 		},
 		{
 			"key": "contact-endpoint",
@@ -6890,6 +7701,10 @@
 		{
 			"key": "work-endpoint",
 			"value": "{{collection-base-url}}/work"
+		},
+		{
+			"key": "page-tech-key",
+			"value": ""
 		}
 	]
 }
