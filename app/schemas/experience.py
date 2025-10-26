@@ -15,7 +15,7 @@ from pydantic import BaseModel
 import datetime
 
 # Import internal dependencies
-from app.schemas.institution import Institution
+from app.schemas.institution import InstitutionRead
 
 
 class ExperienceBase(BaseModel):
@@ -49,7 +49,7 @@ class ExperienceRead(ExperienceBase):
     url: str | None = None
     start_date: datetime.date | None = None
     end_date: datetime.date | None = None
-    company: Institution | None = None
+    company: InstitutionRead | None = None
 
     class Config:
         """

@@ -15,7 +15,7 @@ from pydantic import BaseModel
 import datetime
 
 # Import internal dependencies
-from app.schemas.institution import Institution
+from app.schemas.institution import InstitutionRead
 
 
 class EducationBase(BaseModel):
@@ -47,7 +47,7 @@ class EducationRead(EducationBase):
     end_date: datetime.date | None = None
     course_of_study: str | None = None
     description: str | None = None
-    university: Institution | None = None
+    university: InstitutionRead | None = None
 
     class Config:
         """
