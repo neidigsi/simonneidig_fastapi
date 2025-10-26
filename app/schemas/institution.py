@@ -27,7 +27,7 @@ class InstitutionBase(BaseModel):
     id: int
 
 
-class Institution(InstitutionBase):
+class InstitutionRead(InstitutionBase):
     """
     Extended model for an institution with additional fields.
 
@@ -45,3 +45,16 @@ class Institution(InstitutionBase):
         Enables ORM mode to allow compatibility with SQLAlchemy models.
         """
         orm_mode = True
+        
+        
+class InstitutionCreate(BaseModel):
+    """
+    Schema used to create a new Institution record together with its
+    localized fields.
+
+    Note: The language is taken from the request dependency (`get_language`).
+    """
+    address_id: int | None = None
+    
+    # localized fields
+    name: str | None = None

@@ -3929,6 +3929,946 @@
 			]
 		},
 		{
+			"name": "Institution",
+			"item": [
+				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / All / GET / DE / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Institution / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{institution-endpoint}}",
+													"host": [
+														"{{institution-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / All / GET / EN / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Institution / All / GET / EN / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{institution-endpoint}}",
+													"host": [
+														"{{institution-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / All / GET / FR / Successful request - Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Institution / All / GET / FR / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{institution-endpoint}}",
+													"host": [
+														"{{institution-endpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('de');",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Successful request - Attribute 'name' as expect\", function () {",
+															"    pm.expect(body.name).to.eql('My Institution');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "EN",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('en');",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Successful request - Attribute 'name' as expect\", function () {",
+															"    pm.expect(body.name).to.eql('My Institution');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / EN / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "en",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "FR",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Successful request - ID is defined\", function () {",
+															"    pm.expect(body).to.have.property('id');",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Successful request - Content language as expected\", function () {",
+															"    pm.expect(pm.response.headers.get('content-language')).to.eql('fr');",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Successful request - Attribute 'name' as expect\", function () {",
+															"    pm.expect(body.name).to.eql('My Institution');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Institution / Single / POST / FR / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "fr",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"My Institution\",\n    \"address_id\": 17\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{institution-endpoint}}/",
+													"host": [
+														"{{institution-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Page",
 			"item": [
 				{
@@ -7681,6 +8621,10 @@
 		{
 			"key": "image-endpoint",
 			"value": "{{collection-base-url}}/image"
+		},
+		{
+			"key": "institution-endpoint",
+			"value": ""
 		},
 		{
 			"key": "page-endpoint",
