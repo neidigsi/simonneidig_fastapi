@@ -1,6 +1,6 @@
 alembic==1.17.1
 asyncpg==0.30.0
-fastapi[standard]==0.120.3
+fastapi[standard]==0.121.0
 fastapi_users==15.0.1
 fastapi_users_db_sqlalchemy==7.0.0
 pydantic==2.12.3
