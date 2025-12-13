@@ -23,6 +23,42 @@ from app.db.models.contact import Contact
 from app.schemas.contact import SendingContact
 from app.db.models.language import Language  # Import the Language model
 
+
+async def get_contacts(lang: str, db: AsyncSession):
+    """
+    Retrieve education entries for the given language.
+
+    Args:
+        lang (str): Two-letter ISO639-1 language code (e.g. "en", "de", "fr").
+        db (AsyncSession): SQLAlchemy async database session.
+
+    Returns:
+        list[Contact]: List of Contact objects for the requested language.
+    """
+    
+    result = await db.execute(
+        select(
+            Contact,
+            Language.name
+        )
+        .outerjoin(Language, Contact.language_id == Language.id)
+    )
+    
+    contacts = result.all()
+        
+    # Map the additional fields to the Contact object and attach related objects
+    mapped_results = []
+    for (
+        contact,
+        name
+    ) in contacts:
+        contact.lang = name
+
+        mapped_results.append(contact)
+
+    return mapped_results
+
+
 async def save_contact(contact: SendingContact, db: AsyncSession, lang: str) -> Contact:
     """
     Save a new contact to the database (async).
@@ -51,7 +87,7 @@ async def save_contact(contact: SendingContact, db: AsyncSession, lang: str) -> 
             email=contact.email,
             message=contact.message,
             creation_date=naive_utc_now,
-            sended=False,
+            send=False,
             language_id=language.id
         )
         db.add(new_contact)

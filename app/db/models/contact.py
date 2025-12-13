@@ -29,7 +29,7 @@ class Contact(Base):
         id (int): Primary key.
         creation_date (datetime): Timestamp when the entry was created.
         sending_date (datetime | None): Timestamp when the message was sent/processed.
-        sended (bool): Flag indicating whether the message has been sent or processed.
+        send (bool): Flag indicating whether the message has been sent or processed.
         name (str): Sender's name.
         email (str): Sender's email address.
         message (str): The message body.
@@ -45,7 +45,7 @@ class Contact(Base):
     # Content
     creation_date = Column(DateTime)
     sending_date = Column(DateTime)
-    sended = Column(Boolean)
+    send = Column(Boolean)
     name = Column(String)
     email = Column(String)
     message = Column(String)
