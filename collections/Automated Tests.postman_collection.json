@@ -10,6 +10,231 @@
 			"name": "Contact",
 			"item": [
 				{
+					"name": "All",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "DE",
+									"item": [
+										{
+											"name": "Successful request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / All / GET / DE / Successful request - Status code is 201\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Contact / All / GET / DE / Successful request - Response type is an array\", function () {",
+															"    pm.expect(body).to.be.an('array');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{contact-endpoint}}/",
+													"host": [
+														"{{contact-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non admin user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / All / GET / DE / Non admin user - Status code is 403\", function () {",
+															"    pm.response.to.have.status(403);",
+															"});",
+															"",
+															"pm.test(\"Contact / All / GET / DE / Non admin user - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Forbidden');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{token-non-admin}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{contact-endpoint}}/",
+													"host": [
+														"{{contact-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "No authorization",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / All / GET / DE / No authorization - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Contact / All / GET / DE / No authorization - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{contact-endpoint}}/",
+													"host": [
+														"{{contact-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var body = pm.response.json()",
+															"",
+															"pm.test(\"Contact / All / GET / DE / Invalid token - Status code is 401\", function () {",
+															"    pm.response.to.have.status(401);",
+															"});",
+															"",
+															"pm.test(\"Contact / All / GET / DE / Invalid token - Message as expected\", function () {",
+															"    pm.expect(body.detail).to.eql('Unauthorized');",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "abc",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Language",
+														"value": "de",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{contact-endpoint}}/",
+													"host": [
+														"{{contact-endpoint}}"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
 					"name": "Single",
 					"item": [
 						{
@@ -8477,6 +8702,181 @@
 										}
 									},
 									"response": []
+								},
+								{
+									"name": "Invalid user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json()",
+													"",
+													"pm.test(\"Auth / JWT / Login / Invalid user - Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Auth / JWT / Login / Invalid user - Response contains no token\", function () {",
+													"    pm.expect(body).not.to.have.property('access_token');",
+													"});",
+													"",
+													"pm.test(\"Auth / JWT / Login / Invalid user - Error message as expected\", function () {",
+													"    pm.expect(body.detail).to.equal('LOGIN_BAD_CREDENTIALS');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept-Language",
+												"value": "de",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "username",
+													"value": "abc",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{password}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{login-endpoint}}",
+											"host": [
+												"{{login-endpoint}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json()",
+													"",
+													"pm.test(\"Auth / JWT / Login / Invalid password - Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Auth / JWT / Login / Invalid password - Response contains no token\", function () {",
+													"    pm.expect(body).not.to.have.property('access_token');",
+													"});",
+													"",
+													"pm.test(\"Auth / JWT / Login / Invalid password - Error message as expected\", function () {",
+													"    pm.expect(body.detail).to.equal('LOGIN_BAD_CREDENTIALS');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept-Language",
+												"value": "de",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "username",
+													"value": "{{user}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "abc",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{login-endpoint}}",
+											"host": [
+												"{{login-endpoint}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Logout",
+							"item": [
+								{
+									"name": "Successful request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Auth / JWT / Logout / Successful request - Status code is 204\", function () {",
+													"    pm.response.to.have.status(204);",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept-Language",
+												"value": "de",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{logout-endpoint}}",
+											"host": [
+												"{{logout-endpoint}}"
+											]
+										}
+									},
+									"response": []
 								}
 							]
 						}
@@ -8624,7 +9024,7 @@
 		},
 		{
 			"key": "institution-endpoint",
-			"value": ""
+			"value": "{{collection-base-url}}/institution"
 		},
 		{
 			"key": "page-endpoint",

@@ -20,10 +20,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import ValidationError
 
 # Import internal dependencies
-from app.db.queries.contact import save_contact
+from app.db.queries import contact as crud
 from app.schemas import contact as schemas
 from app.services.i18n import get_language
 from app.services.db import get_async_session
+from app.services.user import fastapi_users
+
+
+# dependency that enforces the current user to be a superuser
+get_current_superuser = fastapi_users.current_user(superuser=True)
 
 
 # Create a new APIRouter instance for the contact API
@@ -34,9 +39,26 @@ router = APIRouter(
 )
 
 
+@router.get("/", response_model=list[schemas.ContactRead])
+async def get_contacts(lang: str = Depends(get_language),
+                       _admin=Depends(get_current_superuser),
+                       db: AsyncSession = Depends(get_async_session)):
+    """
+    Retrieves a list of contact entries.
+
+    Args:
+        lang (str): Language code, injected via dependency.
+        db (Session): Database session, injected via dependency.
+
+    Returns:
+        list[Contact]: List of contact entries.
+    """
+    return await crud.get_contacts(lang, db)
+
+
 @router.post("/", response_model=schemas.SendingContact, status_code=201)
 async def post_contact(
-    request: Request,  # Use Request to manually parse the body
+    request: Request,
     lang: str = Depends(get_language),
     db: AsyncSession = Depends(get_async_session)
 ):
@@ -70,12 +92,12 @@ async def post_contact(
 
     # Validate input fields
     if not contact.name or not contact.email or not contact.message:
-        raise HTTPException(status_code=400, detail="All fields (name, email, message) are required.")
+        raise HTTPException(
+            status_code=400, detail="All fields (name, email, message) are required.")
 
     try:
         # Save the contact to the database (async helper)
-        saved = await save_contact(contact, db, lang)
+        saved = await crud.save_contact(contact, db, lang)
         return saved
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-
