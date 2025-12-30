@@ -3,6 +3,8 @@
 # Install with: pip install fastapi-users-db-sqlalchemy
 
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID
+from sqlalchemy import Column, String
+
 
 
 # Import internal dependencies
@@ -10,4 +12,5 @@ from app.db.database import Base
 
 
 class User(SQLAlchemyBaseUserTableUUID, Base):
-    pass
+    first_name = Column(String)
+    last_name = Column(String)

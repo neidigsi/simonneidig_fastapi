@@ -8575,8 +8575,16 @@
 											"    pm.expect(body).to.have.property('id');",
 											"});",
 											"",
-											"pm.test(\"Auth / Register / Successful request - E-mail returned\", function () {",
-											"    pm.expect(body).to.have.property('email');",
+											"pm.test(\"Auth / Register / Successful request - 'email' properly set\", function () {",
+											"    pm.expect(body.email).to.eql(pm.collectionVariables.get(\"test-mail\"));",
+											"});",
+											"",
+											"pm.test(\"Auth / Register / Successful request - 'first_name' properly set\", function () {",
+											"    pm.expect(body.first_name).to.eql(\"First\");",
+											"});",
+											"",
+											"pm.test(\"Auth / Register / Successful request - 'last_name' properly set\", function () {",
+											"    pm.expect(body.last_name).to.eql(\"Last\");",
 											"});",
 											"",
 											"pm.test(\"Auth / Register / Successful request - 'is_active' properly set\", function () {",
@@ -8592,7 +8600,8 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"packages": {}
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -8612,7 +8621,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+									"raw": "{\n    \"first_name\": \"First\",\n    \"last_name\": \"Last\",\n    \"email\": \"{{test-mail}}\",\n    \"password\": \"cuHdyg-rubpav-9sywko\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -8915,6 +8924,7 @@
 					"// Copy ",
 					"pm.collectionVariables.set(\"collection-base-url\", pm.environment.get(\"base-url\"));",
 					"pm.collectionVariables.set(\"page-tech-key\", pm.variables.replaceIn(\"{{$randomFileName}}\"));",
+					"pm.collectionVariables.set(\"test-mail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));",
 					"",
 					"// Login and request access token | Admin",
 					"pm.sendRequest({",
@@ -9048,6 +9058,10 @@
 		},
 		{
 			"key": "page-tech-key",
+			"value": ""
+		},
+		{
+			"key": "test-mail",
 			"value": ""
 		}
 	]
