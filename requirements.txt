@@ -1,4 +1,4 @@
-alembic==1.18.2
+alembic==1.18.3
 asyncpg==0.31.0
 fastapi[standard]==0.128.0
 fastapi_users==15.0.3
