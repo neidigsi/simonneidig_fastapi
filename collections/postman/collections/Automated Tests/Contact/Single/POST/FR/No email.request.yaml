@@ -1,0 +1,31 @@
+$kind: http-request
+url: "{{contact-endpoint}}"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "name": "Testuser",
+        "message": "This is a test message."
+    }
+scripts:
+  - type: afterResponse
+    code: >
+      var body = pm.response.json()
+
+
+      pm.test("Contact / Single / POST / FR / No email - Status code is 400",
+      function () {
+          pm.response.to.have.status(400);
+      });
+
+
+      pm.test("Contact / Single / POST / FR / No email - Error message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('All fields (name, email, message) are required.');
+      });
+    language: text/javascript
+order: 3000

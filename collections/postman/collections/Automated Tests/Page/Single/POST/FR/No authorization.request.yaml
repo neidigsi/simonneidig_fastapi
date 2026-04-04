@@ -1,0 +1,34 @@
+$kind: http-request
+url: "{{page-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "tech_key": "{{page-tech-key}}",
+        "title": "The page title",
+        "abstract": "This is a short form of the page",
+        "html": "<div>HTML is cool</div>"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Page / Single / POST / FR / No authorization - Status code is
+      401", function () {
+          pm.response.to.have.status(401);
+      });
+
+
+      pm.test("Page / Single / POST / FR / No authorization - Message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('Unauthorized');
+      });
+    language: text/javascript
+order: 3000

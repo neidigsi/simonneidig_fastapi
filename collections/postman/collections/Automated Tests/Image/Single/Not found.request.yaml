@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{image-endpoint}}/123321"
+method: GET
+headers:
+  Accept-Language: de
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Image / Single / GET / Not found - Status code is 404", function
+      () {
+          pm.response.to.have.status(404);
+      });
+
+
+      pm.test("Image / Single / GET / Not found - Error message as expected",
+      function () {
+          pm.expect(body.detail).to.eql('Image not found');
+      });
+    language: text/javascript
+order: 2000

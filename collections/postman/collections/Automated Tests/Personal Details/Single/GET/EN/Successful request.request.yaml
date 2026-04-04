@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{personal-details-endpoint}}"
+method: GET
+headers:
+  Accept-Language: en
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+
+      pm.test("Personal Details / All / GET / EN / Successful request - Response
+      type is an object", function () {
+          pm.expect(body).to.be.an('object');
+      });
+    language: text/javascript
+order: 1000

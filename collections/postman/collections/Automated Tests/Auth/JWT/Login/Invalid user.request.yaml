@@ -1,0 +1,35 @@
+$kind: http-request
+url: "{{login-endpoint}}"
+method: POST
+headers:
+  Accept-Language: de
+  Content-Type: application/x-www-form-urlencoded
+body:
+  type: urlencoded
+  content:
+    username: abc
+    password: "{{password}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Auth / JWT / Login / Invalid user - Status code is 400", function
+      () {
+          pm.response.to.have.status(400);
+      });
+
+
+      pm.test("Auth / JWT / Login / Invalid user - Response contains no token",
+      function () {
+          pm.expect(body).not.to.have.property('access_token');
+      });
+
+
+      pm.test("Auth / JWT / Login / Invalid user - Error message as expected",
+      function () {
+          pm.expect(body.detail).to.equal('LOGIN_BAD_CREDENTIALS');
+      });
+    language: text/javascript
+order: 2000

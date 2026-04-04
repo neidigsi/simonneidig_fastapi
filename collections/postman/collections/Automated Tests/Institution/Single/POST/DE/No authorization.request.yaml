@@ -1,0 +1,32 @@
+$kind: http-request
+url: "{{institution-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: de
+body:
+  type: json
+  content: |-
+    {
+        "name": "My Institution",
+        "address_id": 17
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Institution / Single / POST / DE / No authorization - Status code
+      is 401", function () {
+          pm.response.to.have.status(401);
+      });
+
+
+      pm.test("Institution / Single / POST / DE / No authorization - Message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('Unauthorized');
+      });
+    language: text/javascript
+order: 3000

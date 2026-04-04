@@ -1,0 +1,34 @@
+$kind: http-request
+url: "{{institution-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: de
+body:
+  type: json
+  content: |-
+    {
+        "name": "My Institution",
+        "address_id": 17
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-non-admin}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Institution / Single / POST / DE / Non admin user - Status code
+      is 403", function () {
+          pm.response.to.have.status(403);
+      });
+
+
+      pm.test("Institution / Single / POST / DE / Non admin user - Message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('Forbidden');
+      });
+    language: text/javascript
+order: 2000

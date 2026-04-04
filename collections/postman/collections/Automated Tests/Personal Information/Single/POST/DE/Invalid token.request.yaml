@@ -1,0 +1,35 @@
+$kind: http-request
+url: "{{personal-information-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: de
+body:
+  type: json
+  content: |-
+    {
+        "label": "My Info",
+        "value": "This is the value",
+        "icon": "123456"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: abc
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Personal Information / Single / POST / DE / Invalid token -
+      Status code is 401", function () {
+          pm.response.to.have.status(401);
+      });
+
+
+      pm.test("Personal Information / Single / POST / DE / Invalid token -
+      Message as expected", function () {
+          pm.expect(body.detail).to.eql('Unauthorized');
+      });
+    language: text/javascript
+order: 4000

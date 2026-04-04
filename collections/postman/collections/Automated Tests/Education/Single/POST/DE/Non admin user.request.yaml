@@ -1,0 +1,38 @@
+$kind: http-request
+url: "{{education-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: de
+body:
+  type: json
+  content: |-
+    {
+        "degree": "M.Sc.",
+        "grade": 1.0,
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31",
+        "course_of_study": "Teststudies",
+        "description": "This is a test description"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-non-admin}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Education / Single / POST / DE / Non admin user - Status code is
+      403", function () {
+          pm.response.to.have.status(403);
+      });
+
+
+      pm.test("Education / Single / POST / DE / Non admin user - Message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('Forbidden');
+      });
+    language: text/javascript
+order: 2000

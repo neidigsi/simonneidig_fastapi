@@ -1,0 +1,41 @@
+$kind: http-request
+url: "{{institution-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: en
+body:
+  type: json
+  content: |-
+    {
+        "name": "My Institution"
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Institution / Single / POST / EN / Successful request - Status
+      code is 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Institution / Single / POST / EN / Successful request - ID is
+      defined", function () {
+          pm.expect(body).to.have.property('id');
+      });
+
+
+      pm.test("Institution / Single / POST / EN / Successful request - Content
+      language as expected", function () {
+          pm.expect(pm.response.headers.get('content-language')).to.eql('en');
+      });
+
+
+      pm.test("Institution / Single / POST / EN / Successful request - Attribute
+      'name' as expect", function () {
+          pm.expect(body.name).to.eql('My Institution');
+      });
+    language: text/javascript
+order: 1000

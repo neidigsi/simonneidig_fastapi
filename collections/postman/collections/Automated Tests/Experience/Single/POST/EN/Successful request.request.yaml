@@ -1,0 +1,83 @@
+$kind: http-request
+url: "{{experience-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: en
+body:
+  type: json
+  content: |-
+    {
+        "title": "My Experience",
+        "description": "This is the description",
+        "extract": "This is the extract",
+        "industry": "My Industry",
+        "url": "https://test-experience.test",
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31"
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Status
+      coEN is 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - ID is
+      ENfined", function () {
+          pm.expect(body).to.have.property('id');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Content
+      language as expected", function () {
+          pm.expect(pm.response.headers.get('content-language')).to.eql('en');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Attribute
+      'title' as expect", function () {
+          pm.expect(body.title).to.eql('My Experience');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Attribute
+      'extract' as expect", function () {
+          pm.expect(body.extract).to.eql('This is the extract');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Attribute
+      'description' as expect", function () {
+          pm.expect(body.description).to.eql('This is the description');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Attribute
+      'url' as expect", function () {
+          pm.expect(body.url).to.eql('https://test-experience.test');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Attribute
+      'industry' as expect", function () {
+          pm.expect(body.industry).to.eql('My Industry');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Attribute
+      'start_date' as expect", function () {
+          pm.expect(body.start_date).to.eql('2024-01-01');
+      });
+
+
+      pm.test("Experience / Single / POST / EN / Successful request - Attribute
+      'end_date' as expect", function () {
+          pm.expect(body.end_date).to.eql('2024-12-31');
+      });
+    language: text/javascript
+order: 1000

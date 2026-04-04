@@ -1,0 +1,69 @@
+$kind: http-request
+url: "{{page-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "tech_key": "{{page-tech-key}}",
+        "title": "The page title",
+        "abstract": "This is a short form of the page",
+        "html": "<div>HTML is cool</div>"
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Page / Single / POST / FR / Successful request - Status code is
+      201", function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Page / Single / POST / FR / Successful request - ID is defined",
+      function () {
+          pm.expect(body).to.have.property('id');
+      });
+
+
+      pm.test("Page / Single / POST / FR / Successful request - Content language
+      as expected", function () {
+          pm.expect(pm.response.headers.get('content-language')).to.eql('fr');
+      });
+
+
+      pm.test("Page / Single / POST / FR / Successful request - Attribute
+      'tech_key' as expect", function () {
+          pm.expect(body.tech_key).to.eql(pm.collectionVariables.get("page-tech-key"));
+      });
+
+
+      pm.test("Page / Single / POST / FR / Successful request - Attribute
+      'title' as expect", function () {
+          pm.expect(body.title).to.eql('The page title');
+      });
+
+
+      pm.test("Page / Single / POST / FR / Successful request - Attribute
+      'abstract' as expect", function () {
+          pm.expect(body.abstract).to.eql('This is a short form of the page');
+      });
+
+
+      pm.test("Page / Single / POST / FR / Successful request - Attribute 'html'
+      as expect", function () {
+          pm.expect(body.html).to.eql('<div>HTML is cool</div>');
+      });
+
+
+      pm.test("Page / Single / POST / FR / Successful request - Attribute
+      'creation_date' as expect", function () {
+          const today = new Date().toISOString().split('T')[0];
+          pm.expect(body.creation_date).to.eql(today);
+      });
+    language: text/javascript
+order: 1000

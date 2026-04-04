@@ -1,0 +1,55 @@
+$kind: http-request
+url: "{{personal-information-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: en
+body:
+  type: json
+  content: |-
+    {
+        "label": "My Info",
+        "value": "This is the value",
+        "icon": "123456"
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Personal Information / Single / POST / EN / Successful request -
+      Status code is 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Personal Information / Single / POST / EN / Successful request -
+      ID is defined", function () {
+          pm.expect(body).to.have.property('id');
+      });
+
+
+      pm.test("Personal Information / Single / POST / EN / Successful request -
+      Content language as expected", function () {
+          pm.expect(pm.response.headers.get('content-language')).to.eql('en');
+      });
+
+
+      pm.test("Personal Information / Single / POST / EN / Successful request -
+      Attribute 'label' as expect", function () {
+          pm.expect(body.label).to.eql('My Info');
+      });
+
+
+      pm.test("Personal Information / Single / POST / EN / Successful request -
+      Attribute 'value' as expect", function () {
+          pm.expect(body.value).to.eql('This is the value');
+      });
+
+
+      pm.test("Personal Information / Single / POST / EN / Successful request -
+      Attribute 'icon' as expect", function () {
+          pm.expect(body.icon).to.eql('123456');
+      });
+    language: text/javascript
+order: 1000
