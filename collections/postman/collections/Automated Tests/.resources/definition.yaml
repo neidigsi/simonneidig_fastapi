@@ -1,0 +1,94 @@
+$kind: collection
+variables:
+  collection-base-url: ""
+  token: ""
+  token-non-admin: ""
+  auth-endpoint: "{{collection-base-url}}/auth"
+  jwt-endpoint: "{{auth-endpoint}}/jwt"
+  login-endpoint: "{{jwt-endpoint}}/login"
+  logout-endpoint: "{{jwt-endpoint}}/logout"
+  contact-endpoint: "{{collection-base-url}}/contact"
+  education-endpoint: "{{collection-base-url}}/education"
+  experience-endpoint: "{{collection-base-url}}/experience"
+  expertise-endpoint: "{{collection-base-url}}/expertise"
+  image-endpoint: "{{collection-base-url}}/image"
+  institution-endpoint: "{{collection-base-url}}/institution"
+  page-endpoint: "{{collection-base-url}}/page"
+  personal-details-endpoint: "{{collection-base-url}}/personal-details"
+  personal-information-endpoint: "{{collection-base-url}}/personal-information"
+  social-media-endpoint: "{{collection-base-url}}/social-media"
+  work-endpoint: "{{collection-base-url}}/work"
+  page-tech-key: ""
+  test-mail: ""
+scripts:
+  - type: http:beforeRequest
+    code: >-
+      // Copy 
+
+      pm.collectionVariables.set("collection-base-url",
+      pm.environment.get("base-url"));
+
+      pm.collectionVariables.set("page-tech-key",
+      pm.variables.replaceIn("{{$randomFileName}}"));
+
+      pm.collectionVariables.set("test-mail",
+      pm.variables.replaceIn("{{$randomEmail}}"));
+
+
+      // Login and request access token | Admin
+
+      pm.sendRequest({
+          url: pm.collectionVariables.replaceIn('{{login-endpoint}}'),
+          method: 'POST',
+          header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: {
+              mode: 'urlencoded',
+              urlencoded: [
+                  { key: 'username', value: pm.environment.get('user'), disabled: false },
+                  { key: 'password', value: pm.environment.get('password'), disabled: false }
+              ]
+          }
+      }, (err, res) => {
+          pm.collectionVariables.set("token", res.json().access_token);
+      });
+
+
+      // Login and request access token | Non-Admin
+
+      pm.sendRequest({
+          url: pm.collectionVariables.replaceIn('{{login-endpoint}}'),
+          method: 'POST',
+          header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: {
+              mode: 'urlencoded',
+              urlencoded: [
+                  { key: 'username', value: pm.environment.get('user-non-admin'), disabled: false },
+                  { key: 'password', value: pm.environment.get('password-non-admin'), disabled: false }
+              ]
+          }
+      }, (err, res) => {
+          pm.collectionVariables.set("token-non-admin", res.json().access_token);
+      });
+    language: text/javascript
+  - type: http:afterResponse
+    code: >-
+      // Logout
+
+      pm.sendRequest({
+          url: pm.collectionVariables.replaceIn('{{logout-endpoint}}'),
+          method: 'POST',
+          header: {
+              'Authorization': pm.collectionVariables.replaceIn('Bearer {{token}}')
+          }
+      }, (err, res) => {});
+    language: text/javascript
+auth:
+  - id: 73a36a52-e3e6-457d-926e-6d19e289d812
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{token}}"

@@ -1,0 +1,6 @@
+name: Prod
+values:
+  - key: base-url
+    value: 'http://localhost'
+    enabled: true
+color: 0

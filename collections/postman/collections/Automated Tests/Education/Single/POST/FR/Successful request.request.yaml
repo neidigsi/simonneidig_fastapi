@@ -1,0 +1,76 @@
+$kind: http-request
+url: "{{education-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "degree": "M.Sc.",
+        "grade": 1.1,
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31",
+        "course_of_study": "Teststudies",
+        "description": "This is a test description"
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Status code
+      is 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - ID is
+      defined", function () {
+          pm.expect(body).to.have.property('id');
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Content
+      language as expected", function () {
+          pm.expect(pm.response.headers.get('content-language')).to.eql('fr');
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Attribute
+      'degree' as expect", function () {
+          pm.expect(body.degree).to.eql('M.Sc.');
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Attribute
+      'grade' as expect", function () {
+          pm.expect(body.grade).to.eql(1.1);
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Attribute
+      'start_date' as expect", function () {
+          pm.expect(body.start_date).to.eql('2024-01-01');
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Attribute
+      'end_date' as expect", function () {
+          pm.expect(body.end_date).to.eql('2024-12-31');
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Attribute
+      'course_of_study' as expect", function () {
+          pm.expect(body.course_of_study).to.eql('Teststudies');
+      });
+
+
+      pm.test("Education / Single / POST / FR / Successful request - Attribute
+      'description' as expect", function () {
+          pm.expect(body.description).to.eql('This is a test description');
+      });
+    language: text/javascript
+order: 1000

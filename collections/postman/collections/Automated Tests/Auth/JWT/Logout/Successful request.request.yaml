@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{logout-endpoint}}"
+method: POST
+headers:
+  Accept-Language: de
+  Content-Type: application/x-www-form-urlencoded
+scripts:
+  - type: afterResponse
+    code: >-
+      pm.test("Auth / JWT / Logout / Successful request - Status code is 204",
+      function () {
+          pm.response.to.have.status(204);
+      });
+    language: text/javascript
+order: 1000

@@ -1,0 +1,33 @@
+$kind: http-request
+url: "{{expertise-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "label": "My Info",
+        "value": "This is the value",
+        "icon": "123456"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Personal Information / Single / POST / FR / No authorization -
+      Status code is 401", function () {
+          pm.response.to.have.status(401);
+      });
+
+
+      pm.test("Personal Information / Single / POST / FR / No authorization -
+      Message as expected", function () {
+          pm.expect(body.detail).to.eql('Unauthorized');
+      });
+    language: text/javascript
+order: 3000

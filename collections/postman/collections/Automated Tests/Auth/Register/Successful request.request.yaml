@@ -1,0 +1,69 @@
+$kind: http-request
+url: "{{auth-endpoint}}/register"
+method: POST
+headers:
+  Accept-Language: de
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "first_name": "First",
+        "last_name": "Last",
+        "email": "{{test-mail}}",
+        "password": "cuHdyg-rubpav-9sywko"
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Auth / Register / Successful request - Status code is 201",
+      function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Auth / Register / Successful request - ID returned", function ()
+      {
+          pm.expect(body).to.have.property('id');
+      });
+
+
+      pm.test("Auth / Register / Successful request - 'email' properly set",
+      function () {
+          pm.expect(body.email).to.eql(pm.collectionVariables.get("test-mail"));
+      });
+
+
+      pm.test("Auth / Register / Successful request - 'first_name' properly
+      set", function () {
+          pm.expect(body.first_name).to.eql("First");
+      });
+
+
+      pm.test("Auth / Register / Successful request - 'last_name' properly set",
+      function () {
+          pm.expect(body.last_name).to.eql("Last");
+      });
+
+
+      pm.test("Auth / Register / Successful request - 'is_active' properly set",
+      function () {
+          pm.expect(body.is_active).to.eql(true);
+      });
+
+
+      pm.test("Auth / Register / Successful request - 'is_superuser' returned",
+      function () {
+          pm.expect(body.is_superuser).to.eql(false);
+      });
+
+
+      pm.test("Auth / Register / Successful request - 'is_verified' returned",
+      function () {
+          pm.expect(body.is_verified).to.eql(false);
+      });
+    language: text/javascript
+order: 1000

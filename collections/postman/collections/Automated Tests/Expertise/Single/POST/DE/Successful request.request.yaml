@@ -1,0 +1,62 @@
+$kind: http-request
+url: "{{expertise-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: de
+body:
+  type: json
+  content: |-
+    {
+        "title": "My Expertise",
+        "description": "This is the description",
+        "icon": "ChartBarIcon",
+        "sort": 17
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Expertise / Single / POST / DE / Successful request - Status code
+      is 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Expertise / Single / POST / DE / Successful request - ID is
+      defined", function () {
+          pm.expect(body).to.have.property('id');
+      });
+
+
+      pm.test("Expertise / Single / POST / DE / Successful request - Content
+      language as expected", function () {
+          pm.expect(pm.response.headers.get('content-language')).to.eql('de');
+      });
+
+
+      pm.test("Expertise / Single / POST / DE / Successful request - Attribute
+      'title' as expect", function () {
+          pm.expect(body.title).to.eql('My Expertise');
+      });
+
+
+      pm.test("Expertise / Single / POST / DE / Successful request - Attribute
+      'description' as expect", function () {
+          pm.expect(body.description).to.eql('This is the description');
+      });
+
+
+      pm.test("Expertise / Single / POST / DE / Successful request - Attribute
+      'icon' as expect", function () {
+          pm.expect(body.icon).to.eql('ChartBarIcon');
+      });
+
+
+      pm.test("Expertise / Single / POST / DE / Successful request - Attribute
+      'sort' as expect", function () {
+          pm.expect(body.sort).to.eql(17);
+      });
+    language: text/javascript
+order: 1000

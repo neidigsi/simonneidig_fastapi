@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{image-endpoint}}/1"
+method: GET
+headers:
+  Accept-Language: de
+order: 1000
