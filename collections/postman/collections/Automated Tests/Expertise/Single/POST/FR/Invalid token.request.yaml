@@ -1,0 +1,39 @@
+$kind: http-request
+url: "{{expertise-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "title": "My Experience",
+        "description": "This is the description",
+        "extract": "This is the extract",
+        "industry": "My Industry",
+        "url": "https://test-experience.test",
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: abc
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Expertise / Single / POST / FR / Invalid token - Status code is
+      401", function () {
+          pm.response.to.have.status(401);
+      });
+
+
+      pm.test("Expertise / Single / POST / FR / Invalid token - Message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('Unauthorized');
+      });
+    language: text/javascript
+order: 4000

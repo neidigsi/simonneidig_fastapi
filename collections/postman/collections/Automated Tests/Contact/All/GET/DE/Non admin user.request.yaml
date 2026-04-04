@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{contact-endpoint}}/"
+method: GET
+headers:
+  Accept-Language: de
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-non-admin}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Contact / All / GET / DE / Non admin user - Status code is 403",
+      function () {
+          pm.response.to.have.status(403);
+      });
+
+
+      pm.test("Contact / All / GET / DE / Non admin user - Message as expected",
+      function () {
+          pm.expect(body.detail).to.eql('Forbidden');
+      });
+    language: text/javascript
+order: 2000

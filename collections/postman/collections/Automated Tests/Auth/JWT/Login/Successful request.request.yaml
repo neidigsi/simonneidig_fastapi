@@ -1,0 +1,35 @@
+$kind: http-request
+url: "{{login-endpoint}}"
+method: POST
+headers:
+  Accept-Language: de
+  Content-Type: application/x-www-form-urlencoded
+body:
+  type: urlencoded
+  content:
+    username: "{{user}}"
+    password: "{{password}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Auth / JWT / Login / Successful request - Status code is 200",
+      function () {
+          pm.response.to.have.status(200);
+      });
+
+
+      pm.test("Auth / JWT / Login / Successful request - Response contains
+      token", function () {
+          pm.expect(body).to.have.property('access_token');
+      });
+
+
+      pm.test("Auth / JWT / Login / Successful request - Token is of type
+      'bearer'", function () {
+          pm.expect(body.token_type).to.equal('bearer');
+      });
+    language: text/javascript
+order: 1000

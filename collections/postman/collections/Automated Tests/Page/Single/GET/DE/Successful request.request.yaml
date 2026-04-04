@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{page-endpoint}}/imprint"
+method: GET
+headers:
+  Accept-Language: de
+scripts:
+  - type: afterResponse
+    code: var body = pm.response.json()
+    language: text/javascript
+order: 1000

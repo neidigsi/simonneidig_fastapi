@@ -1,0 +1,32 @@
+$kind: http-request
+url: "{{contact-endpoint}}"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept-Language: abc
+body:
+  type: json
+  content: |-
+    {
+        "name": "Testuser",
+        "email": "test@simon-neidig.de",
+        "message": "This is a test message."
+    }
+scripts:
+  - type: afterResponse
+    code: >
+      var body = pm.response.json()
+
+
+      pm.test("Contact / Single / POST / Invalid language - Status code is 400",
+      function () {
+          pm.response.to.have.status(400);
+      });
+
+
+      pm.test("Contact / Single / POST / Invalid language - Error message as
+      expected", function () {
+          pm.expect(body.detail).to.eql("Language 'abc' not found in the database.");
+      });
+    language: text/javascript
+order: 5000

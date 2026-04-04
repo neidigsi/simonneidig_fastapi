@@ -1,0 +1,36 @@
+$kind: http-request
+url: "{{page-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "tech_key": "{{page-tech-key}}",
+        "title": "The page title",
+        "abstract": "This is a short form of the page",
+        "html": "<div>HTML is cool</div>"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-non-admin}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Page / Single / POST / FR / Non admin user - Status code is 403",
+      function () {
+          pm.response.to.have.status(403);
+      });
+
+
+      pm.test("Page / Single / POST / FR / Non admin user - Message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('Forbidden');
+      });
+    language: text/javascript
+order: 2000

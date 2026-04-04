@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{expertise-endpoint}}"
+method: GET
+headers:
+  Accept-Language: en
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Expertise / All / GET / EN / Successful request - Status code is
+      200", function () {
+          pm.response.to.have.status(200);
+      });
+
+
+      pm.test("Expertise / All / GET / EN / Successful request - Response type
+      is an array", function () {
+          pm.expect(body).to.be.an('array');
+      });
+    language: text/javascript
+order: 1000

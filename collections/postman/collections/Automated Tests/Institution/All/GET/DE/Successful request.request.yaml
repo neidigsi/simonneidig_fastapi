@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{institution-endpoint}}"
+method: GET
+headers:
+  Accept-Language: de
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Institution / All / GET / DE / Successful request - Status code
+      is 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+
+      pm.test("Institution / All / GET / DE / Successful request - Response type
+      is an array", function () {
+          pm.expect(body).to.be.an('array');
+      });
+    language: text/javascript
+order: 1000

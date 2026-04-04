@@ -1,0 +1,45 @@
+$kind: http-request
+url: "{{contact-endpoint}}"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept-Language: de
+body:
+  type: json
+  content: |-
+    {
+        "name": "Testuser",
+        "email": "test@simon-neidig.de",
+        "message": "This is a test message."
+    }
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+      /*
+
+      pm.test("Contact / Single / POST / DE / Successful request - Status code
+      is 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+
+      pm.test("Contact / Single / POST / DE / Successful request - Attribute
+      'name' correctly returned", function () {
+          pm.expect(body.name).to.eql('Testuser');
+      });
+
+
+      pm.test("Contact / Single / POST / DE / Successful request - Attribute
+      'email' correctly returned", function () {
+          pm.expect(body.email).to.eql('test@simon-neidig.de');
+      });
+
+
+      pm.test("Contact / Single / POST / DE / Successful request - Attribute
+      'message' correctly returned", function () {
+          pm.expect(body.message).to.eql('This is a test message.');
+      });*/
+    language: text/javascript
+order: 1000

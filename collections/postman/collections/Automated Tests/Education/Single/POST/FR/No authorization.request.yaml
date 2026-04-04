@@ -1,0 +1,36 @@
+$kind: http-request
+url: "{{education-endpoint}}/"
+method: POST
+headers:
+  Accept-Language: fr
+body:
+  type: json
+  content: |-
+    {
+        "degree": "M.Sc.",
+        "grade": 1.0,
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31",
+        "course_of_study": "Teststudies",
+        "description": "This is a test description"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: >-
+      var body = pm.response.json()
+
+
+      pm.test("Education / Single / POST / FR / No authorization - Status code
+      is 401", function () {
+          pm.response.to.have.status(401);
+      });
+
+
+      pm.test("Education / Single / POST / FR / No authorization - Message as
+      expected", function () {
+          pm.expect(body.detail).to.eql('Unauthorized');
+      });
+    language: text/javascript
+order: 3000
