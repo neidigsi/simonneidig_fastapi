@@ -7,5 +7,5 @@ pydantic==2.13.4
 psycopg2==2.9.12
 python-dotenv==1.2.2
 requests==2.34.2
-SQLAlchemy==2.0.51
+SQLAlchemy==2.0.52
 uvicorn[standard]==0.52.1
