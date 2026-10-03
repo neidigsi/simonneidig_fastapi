@@ -9,7 +9,8 @@ running (e.g. via uvicorn).
 """
 
 # Import external dependencies
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
 # Import internal dependencies
 from app.api.routes.contact import contact
@@ -28,7 +29,50 @@ from app.services.user import auth_backend, fastapi_users
 
 
 # Initialize FastAPI app
-app = FastAPI()
+app = FastAPI(
+    title="simon-neidig.eu API",
+    description="Backend API for simon-neidig.eu, the personal website of Simon Neidig (Freelance Softwareentwickler, Projektleitung & Business Analyse).",
+    version="1.0.0",
+    contact={
+        "name": "Simon Neidig",
+        "email": "mail@simon-neidig.eu",
+    },
+)
+
+# Restrict browser access to the public frontend (plus local dev origins).
+# The API itself must never appear in search results (see X-Robots-Tag below).
+ALLOWED_ORIGINS = [
+    "https://simon-neidig.eu",
+    "https://www.simon-neidig.eu",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    """Attach security headers to every API response.
+
+    X-Robots-Tag `noindex` keeps raw API JSON out of search indexes
+    (indexing happens only via the frontend); the frontend `robots.txt`
+    additionally disallows crawling `/api/`.
+    """
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["X-Robots-Tag"] = "noindex, nofollow"
+    return response
 
 # Define route prefixes as constants
 AUTH_PREFIX = "/auth"
