@@ -3,7 +3,7 @@ asyncpg==0.32.0
 fastapi[standard]==0.142.2
 fastapi_users==15.0.5
 fastapi_users_db_sqlalchemy==7.0.0
-pydantic==2.13.5
+pydantic==2.14.1
 psycopg2==2.9.13
 python-dotenv==1.2.4
 requests==2.34.2
